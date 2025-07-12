@@ -1,7 +1,9 @@
 {
-  "name": "stickerSaveBot",
+  "name": "Sticker2LottieBot",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Telegram bot that converts animated .tgs stickers into .lottie (v2) or .json files using inline interaction and Telegram Bot API.",
+  "author": "@MasterSaya",
+  "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
