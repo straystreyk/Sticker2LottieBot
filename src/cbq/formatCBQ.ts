@@ -1,4 +1,4 @@
-import { convertTypesStore } from "../store/convertTypesStore";
+import { convertTypesStore } from "../store/convertTypesStore.js";
 import { CallbackQueryMiddleware, Context } from "grammy";
 
 const formatCBQ: CallbackQueryMiddleware<Context> = async (ctx) => {

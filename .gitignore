@@ -8,6 +8,7 @@ yarn-error.log*
 /.pnp
 .pnp.js
 .env
+.compose.env
 .idea
 .DS_Store
 

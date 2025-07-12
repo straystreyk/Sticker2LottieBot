@@ -1,10 +1,10 @@
-import { convertTypesStore } from "../store/convertTypesStore";
+import { convertTypesStore } from "../store/convertTypesStore.js";
 import axios from "axios";
 import { fileTypeFromBuffer } from "file-type";
 import zlib from "node:zlib";
 import { Context, InputFile } from "grammy";
 import JSZip from "jszip";
-import { CONFIG } from "../config";
+import { CONFIG } from "../config.js";
 
 const stickerToFile = async (ctx: Context) => {
   const userId = ctx.from?.id;

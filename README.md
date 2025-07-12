@@ -62,16 +62,24 @@ BOT_TOKEN=123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11
 ```bash
 npm run start
 ```
-
 ---
 
-## 📄 Dependencies
+## 🐳 Docker Setup
 
-- [`grammy`](https://grammy.dev) — Telegram Bot API library
-- [`file-type`](https://www.npmjs.com/package/file-type) — file type detection
-- [`axios`](https://axios-http.com) — for downloading files from Telegram
-- [`jszip`](https://stuk.github.io/jszip/) — to generate `.lottie` ZIP files
-- `zlib` (built-in in Node.js) — for unpacking `.tgs` files
+You can also run the bot inside a Docker container using docker-compose.
+
+### 1. Create a .compose.env file with your bot token:
+
+```env
+BOT_TOKEN=123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11
+```
+Make sure .compose.env is in the same directory as your docker-compose.yml.
+
+### 2. To build and run the container:
+
+```
+docker-compose up --build
+```
 
 ---
 

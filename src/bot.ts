@@ -1,5 +1,5 @@
 import { Bot } from "grammy";
-import { CONFIG } from "./config";
+import { CONFIG } from "./config.js";
 
 const bot = new Bot(CONFIG.botToken);
 

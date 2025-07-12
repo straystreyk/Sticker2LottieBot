@@ -1,7 +1,7 @@
-import { convertCommand } from "./commands/convert";
-import { formatCBQ } from "./cbq/formatCBQ";
-import { stickerToFile } from "./logic/stickerToFile";
-import bot, { setBotCommands } from "./bot";
+import { convertCommand } from "./commands/convert.js";
+import { formatCBQ } from "./cbq/formatCBQ.js";
+import { stickerToFile } from "./logic/stickerToFile.js";
+import bot, { setBotCommands } from "./bot.js";
 
 const startServer = async () => {
   await setBotCommands();

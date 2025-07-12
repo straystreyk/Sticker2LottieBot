@@ -1,0 +1,7 @@
+services:
+  tgs-bot:
+    build:
+      context: .
+    restart: unless-stopped
+    env_file:
+      - .compose.env
