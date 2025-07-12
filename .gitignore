@@ -1,3 +1,4 @@
+/dist
 /tmp
 /out-tsc
 
@@ -9,7 +10,6 @@ yarn-error.log*
 .pnp.js
 .env
 .compose.env
-.dist
 .idea
 .DS_Store
 
