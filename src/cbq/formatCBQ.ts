@@ -7,7 +7,7 @@ const formatCBQ: CallbackQueryMiddleware<Context> = async (ctx) => {
 
   convertTypesStore.set(userId, format);
   await ctx.answerCallbackQuery();
-  await ctx.reply(`The ${format} format is selected. Now format the sticker.`);
+  await ctx.reply(`The ${format} format is selected. Now send the sticker.`);
 };
 
 export { formatCBQ };

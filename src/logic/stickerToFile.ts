@@ -6,7 +6,7 @@ import { Context, InputFile } from "grammy";
 import JSZip from "jszip";
 import { CONFIG } from "../config.js";
 
-const stickerToFile = async (ctx: Context) => {
+const stickerToFile = async (ctx: Context, fileId?: string) => {
   const userId = ctx.from?.id;
 
   if (!userId) return ctx.reply("No userId passed");
@@ -16,8 +16,6 @@ const stickerToFile = async (ctx: Context) => {
   if (!format) {
     return ctx.reply("First select the format via the /convert command");
   }
-
-  const fileId = ctx.msg?.sticker?.file_id;
 
   if (!fileId) return ctx.reply("FileID not passed");
 
