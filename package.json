@@ -16,12 +16,12 @@
     "dotenv": "^17.2.0",
     "file-type": "^21.0.0",
     "grammy": "1.37.0",
-    "jszip": "^3.10.1"
-  },
-  "devDependencies": {
-    "prettier": "^3.6.2",
+    "jszip": "^3.10.1",
     "tsx": "^4.20.3",
     "typescript": "^5.5.3"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
   },
   "private": true
 }
