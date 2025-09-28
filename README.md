@@ -5,7 +5,7 @@ This Telegram bot converts **animated Telegram stickers (.tgs)** into:
 - `.json` (Lottie JSON)
 
 Perfect for designers, animators, and developers working with Lottie animations.
-
+Working bot here https://t.me/Sticker2LottieBot
 ---
 
 ## 📦 Features
