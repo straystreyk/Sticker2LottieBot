@@ -35,8 +35,8 @@ Perfect for designers, animators, and developers working with Lottie animations.
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/tgs-converter-bot.git
-cd tgs-converter-bot
+git clone https://github.com/straystreyk/Sticker2LottieBot
+cd Sticker2LottieBot
 ```
 
 ### 2. Install dependencies
@@ -78,7 +78,7 @@ Make sure .compose.env is in the same directory as your docker-compose.yml.
 ### 2. To build and run the container:
 
 ```
-docker-compose up --build
+docker-compose up -d
 ```
 
 ---

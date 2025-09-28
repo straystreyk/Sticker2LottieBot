@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY package.json .compose.env ./
 
-RUN npm install --omit=dev
+RUN npm install
 
 COPY . .
 
