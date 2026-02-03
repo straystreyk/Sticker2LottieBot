@@ -7,11 +7,11 @@ const setBotCommands = async () => {
   await bot.api.setMyCommands([
     {
       command: "start",
-      description: "Получить меню с возможностями бота",
+      description: "Get BOT Menu",
     },
     {
       command: "convert",
-      description: "Выбрать формат (.lottie или .json)",
+      description: "Convert .tgs to lottie or lottie to .tgs",
     },
   ]);
 };
