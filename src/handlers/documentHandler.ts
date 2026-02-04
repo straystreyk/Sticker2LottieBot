@@ -8,6 +8,7 @@ export const documentHandler = async (ctx: Context) => {
     if (!userId) return;
 
     const state = convertFlowStore.get(userId);
+
     if (!state || state.mode !== "lottie2tgs") {
         return ctx.reply("Use /convert first and choose Lottie → TGS.");
     }

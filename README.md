@@ -1,17 +1,24 @@
-# 🌀 TGS to LOTTIE/JSON Telegram Bot
+# 🌀 Sticker Converter Telegram Bot (TGS ↔ Lottie)
 
-This Telegram bot converts **animated Telegram stickers (.tgs)** into:
-- `.lottie` (v2)
-- `.json` (Lottie JSON)
+This Telegram bot converts **Telegram animated stickers (.tgs)** and **Lottie animations (.json / .lottie)** both ways:
+
+- **TGS → Lottie** (`.lottie` v2)
+- **TGS → JSON** (Lottie JSON)
+- **Lottie / JSON → TGS** (Telegram animated sticker)
 
 Perfect for designers, animators, and developers working with Lottie animations.
-Working bot here https://t.me/Sticker2LottieBot
+
+Working bot: https://t.me/Sticker2LottieBot
 
 ---
 
 ## 📦 Features
 
-- ✅ Choose export format: `.lottie` or `.json`
+- ✅ Convert **TGS → `.lottie` (v2)**
+- ✅ Convert **TGS → `.json` (Lottie JSON)**
+- ✅ Convert **`.lottie` / `.json` → TGS**
+- ✅ Interactive flow via buttons (`/convert`)
+
 ---
 
 ## 🚀 How to Use
@@ -21,11 +28,24 @@ Working bot here https://t.me/Sticker2LottieBot
    /convert
    ```
 
-2. Choose the desired format (`.lottie` or `.json`) via buttons.
+2. Choose what you want to convert:
+   - **TGS → Lottie**
+   - **Lottie → TGS**
 
-3. Send an **animated sticker** (in `.tgs` format).
+### ✅ Mode: TGS → Lottie / JSON
 
+1. Select **TGS → Lottie**
+2. Choose the desired export format (`.lottie` or `.json`)
+3. Send an **animated sticker** (`.tgs`)
 4. Get the result as a file 🎉
+
+### ✅ Mode: Lottie / JSON → TGS
+
+1. Select **Lottie → TGS**
+2. Send a **Lottie file** (`.json` or `.lottie`)
+3. Get the **`.tgs` sticker file** 🎉
+
+> Tip: you can add the resulting `.tgs` to a sticker pack using @Stickers.
 
 ---
 
@@ -52,33 +72,25 @@ npm install
 BOT_TOKEN=your_bot_token_here
 ```
 
-📌 Example:
-
-```env
-BOT_TOKEN=123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11
-```
-
 ### 4. Run the bot
 
 ```bash
 npm run start
 ```
+
 ---
 
 ## 🐳 Docker Setup
 
-You can also run the bot inside a Docker container using docker-compose.
-
-### 1. Create a .compose.env file with your bot token:
+### 1. Create a `.compose.env` file
 
 ```env
-BOT_TOKEN=123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11
+BOT_TOKEN=your_bot_token_here
 ```
-Make sure .compose.env is in the same directory as your docker-compose.yml.
 
-### 2. To build and run the container:
+### 2. Run container
 
-```
+```bash
 docker-compose up -d
 ```
 
