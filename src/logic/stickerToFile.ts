@@ -6,6 +6,7 @@ import { Context, InputFile } from "grammy";
 import JSZip from "jszip";
 import { CONFIG } from "../config.js";
 import { convertFlowStore } from "../store/convertTypesStore.js";
+import { logConversion } from "../db/database.js";
 
 function buildCaption(base: string, lottieJSON: string) {
   try {
@@ -59,6 +60,8 @@ export const stickerToFile = async (ctx: Context, fileId?: string) => {
     return ctx.reply("Choose output format first (json or lottie).");
   }
 
+  const targetType = format === "json" ? "json" : "lottie";
+
   if (!fileId) return ctx.reply("FileID not passed");
 
   const file = await ctx.api.getFile(fileId);
@@ -109,10 +112,23 @@ export const stickerToFile = async (ctx: Context, fileId?: string) => {
       });
     }
 
+    logConversion({
+      telegramUserId: userId,
+      sourceType: "tgs",
+      targetType,
+      success: true,
+    });
 
     convertFlowStore.clear(userId);
   } catch (e) {
     console.error(e);
+    logConversion({
+      telegramUserId: userId,
+      sourceType: "tgs",
+      targetType,
+      success: false,
+      errorMessage: e instanceof Error ? e.message : "Unknown processing error",
+    });
     return ctx.reply("There was an error processing the sticker.");
   }
 };

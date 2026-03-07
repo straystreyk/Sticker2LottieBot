@@ -21,12 +21,7 @@ export const documentHandler = async (ctx: Context) => {
     const isLottie = fileName.endsWith(".lottie");
 
     if (!isJson && !isLottie) {
-        return ctx.reply("Please send a Lottie file. For now I support .json (later we can add .lottie).");
-    }
-
-    // сейчас делаем только .json как “железобетонный” кейс
-    if (!isJson) {
-        return ctx.reply("Please send a Lottie JSON (.json). (.lottie support can be added next.)");
+        return ctx.reply("Please send a Lottie file as `.json` or `.lottie`.");
     }
 
     await lottieFileToTgsSticker(ctx, doc.file_id);

@@ -2,6 +2,7 @@
 import type { CallbackQueryMiddleware, Context } from "grammy";
 import { InlineKeyboard } from "grammy";
 import {convertFlowStore} from "../store/convertTypesStore.js";
+import { setUserMode } from "../db/database.js";
 
 export const modeCBQ: CallbackQueryMiddleware<Context> = async (ctx) => {
     const mode = ctx.match[1] as "tgs2lottie" | "lottie2tgs";
@@ -9,6 +10,7 @@ export const modeCBQ: CallbackQueryMiddleware<Context> = async (ctx) => {
     if (!userId) return;
 
     convertFlowStore.setMode(userId, mode);
+    setUserMode(userId, mode);
 
     await ctx.answerCallbackQuery();
 
@@ -22,5 +24,5 @@ export const modeCBQ: CallbackQueryMiddleware<Context> = async (ctx) => {
     }
 
     // lottie2tgs
-    return ctx.reply("Send me a Lottie JSON file (.json) and I will return a .tgs sticker.");
+    return ctx.reply("Send me a Lottie file (.json or .lottie) and I will return a .tgs sticker.");
 };

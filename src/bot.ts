@@ -4,7 +4,7 @@ import { CONFIG } from "./config.js";
 const bot = new Bot(CONFIG.botToken);
 
 const setBotCommands = async () => {
-  await bot.api.setMyCommands([
+  const commands = [
     {
       command: "start",
       description: "Get BOT Menu",
@@ -13,7 +13,24 @@ const setBotCommands = async () => {
       command: "convert",
       description: "Convert .tgs to lottie or lottie to .tgs",
     },
-  ]);
+  ];
+
+  if (CONFIG.adminUserIds.length > 0) {
+    commands.push({
+      command: "stats",
+      description: "Show bot usage stats",
+    });
+    commands.push({
+      command: "users",
+      description: "Show users list",
+    });
+    commands.push({
+      command: "broadcast",
+      description: "Broadcast replied message",
+    });
+  }
+
+  await bot.api.setMyCommands(commands);
 };
 
 export { setBotCommands };

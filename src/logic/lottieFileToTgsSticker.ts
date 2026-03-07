@@ -1,6 +1,8 @@
 import type { Context } from "grammy";
 import { InputFile } from "grammy";
 import { gzipSync } from "node:zlib";
+import JSZip from "jszip";
+import { logConversion } from "../db/database.js";
 
 function getTelegramFileUrl(token: string, filePath: string) {
     return `https://api.telegram.org/file/bot${token}/${filePath}`;
@@ -11,6 +13,37 @@ async function downloadAsBuffer(url: string): Promise<Buffer> {
     if (!res.ok) throw new Error(`Download failed: ${res.status} ${res.statusText}`);
     const arr = await res.arrayBuffer();
     return Buffer.from(arr);
+}
+
+async function extractLottieJson(buf: Buffer, fileName?: string) {
+    const normalizedFileName = fileName?.toLowerCase() ?? "";
+    const isArchive = normalizedFileName.endsWith(".lottie");
+
+    if (!isArchive) {
+        return buf.toString("utf-8");
+    }
+
+    const zip = await JSZip.loadAsync(buf);
+    const manifestEntry = zip.file("manifest.json");
+    if (manifestEntry) {
+        const manifestText = await manifestEntry.async("string");
+        const manifest = JSON.parse(manifestText);
+        const animationPath = manifest?.animations?.[0]?.path;
+
+        if (typeof animationPath === "string") {
+            const animationEntry = zip.file(animationPath);
+            if (animationEntry) {
+                return animationEntry.async("string");
+            }
+        }
+    }
+
+    const fallbackEntry = zip.file(/\.json$/i).find((entry) => !entry.dir && entry.name !== "manifest.json");
+    if (fallbackEntry) {
+        return fallbackEntry.async("string");
+    }
+
+    throw new Error("The .lottie archive does not contain an animation JSON file.");
 }
 
 type LottieMeta = {
@@ -24,8 +57,7 @@ type LottieMeta = {
     name?: string;
 };
 
-function parseAndInspectLottie(buf: Buffer): { jsonText: string; json: any; meta: LottieMeta } {
-    const jsonText = buf.toString("utf-8");
+function parseAndInspectLottie(jsonText: string): { jsonText: string; json: any; meta: LottieMeta } {
     const json = JSON.parse(jsonText);
 
     if (!json || typeof json !== "object") throw new Error("Invalid JSON");
@@ -79,21 +111,45 @@ function buildCaption(meta: LottieMeta, tgsBytes: number) {
 }
 
 export async function lottieFileToTgsSticker(ctx: Context, fileId: string) {
+    const userId = ctx.from?.id;
+    if (!userId) throw new Error("No userId passed.");
+
+    const documentFileName = ctx.message?.document?.file_name;
+    const sourceType = documentFileName?.toLowerCase().endsWith(".lottie") ? "lottie" : "json";
     const file = await ctx.api.getFile(fileId);
     if (!file.file_path) throw new Error("Telegram file_path is empty.");
 
     const token = process.env.BOT_TOKEN;
     if (!token) throw new Error("BOT_TOKEN is not set.");
 
-    const url = getTelegramFileUrl(token, file.file_path);
-    const buf = await downloadAsBuffer(url);
+    try {
+        const url = getTelegramFileUrl(token, file.file_path);
+        const buf = await downloadAsBuffer(url);
+        const jsonText = await extractLottieJson(buf, documentFileName);
 
-    const { jsonText, meta } = parseAndInspectLottie(buf);
+        const { meta } = parseAndInspectLottie(jsonText);
 
-    // .tgs = gzip(Lottie JSON)
-    const tgs = gzipSync(Buffer.from(jsonText, "utf-8"), { level: 9 });
+        // .tgs = gzip(Lottie JSON)
+        const tgs = gzipSync(Buffer.from(jsonText, "utf-8"), { level: 9 });
 
-    // ✅ send as DOCUMENT so we can attach caption (stickers cannot have captions)
-    await ctx.reply(buildCaption(meta, tgs.byteLength))
-    await ctx.replyWithSticker(new InputFile(tgs, "sticker.tgs"));
+        // ✅ send as DOCUMENT so we can attach caption (stickers cannot have captions)
+        await ctx.reply(buildCaption(meta, tgs.byteLength))
+        await ctx.replyWithSticker(new InputFile(tgs, "sticker.tgs"));
+
+        logConversion({
+            telegramUserId: userId,
+            sourceType,
+            targetType: "tgs",
+            success: true,
+        });
+    } catch (error) {
+        logConversion({
+            telegramUserId: userId,
+            sourceType,
+            targetType: "tgs",
+            success: false,
+            errorMessage: error instanceof Error ? error.message : "Unknown processing error",
+        });
+        throw error;
+    }
 }

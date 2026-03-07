@@ -10,7 +10,7 @@ const textHandler = async (ctx: Context) => {
   if (!state) return ctx.reply("First select the mode via /convert.");
 
   if (state.mode !== "tgs2lottie") {
-    return ctx.reply("You selected Lottie → TGS. Send a .json Lottie file (as document).");
+    return ctx.reply("You selected Lottie → TGS. Send a `.json` or `.lottie` file as a document.");
   }
 
   // tgs2lottie: можно принимать кастом-эмодзи как раньше

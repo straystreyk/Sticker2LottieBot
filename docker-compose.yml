@@ -1,7 +1,8 @@
 services:
   tgs-bot:
-    build:
-      context: .
+    image: sticker2lottiebot:latest
     restart: unless-stopped
     env_file:
       - .compose.env
+    volumes:
+      - ./data:/data

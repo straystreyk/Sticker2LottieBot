@@ -18,6 +18,10 @@ Working bot: https://t.me/Sticker2LottieBot
 - ✅ Convert **TGS → `.json` (Lottie JSON)**
 - ✅ Convert **`.lottie` / `.json` → TGS**
 - ✅ Interactive flow via buttons (`/convert`)
+- ✅ Persist users and conversion logs in SQLite
+- ✅ Admin stats via `/stats`
+- ✅ Admin user list via `/users`
+- ✅ Batched broadcast via `/broadcast` as reply
 
 ---
 
@@ -70,6 +74,8 @@ npm install
 
 ```env
 BOT_TOKEN=your_bot_token_here
+DB_PATH=./data/sticker2lottie.sqlite
+ADMIN_USER_IDS=123456789
 ```
 
 ### 4. Run the bot
@@ -86,6 +92,8 @@ npm run start
 
 ```env
 BOT_TOKEN=your_bot_token_here
+DB_PATH=/data/sticker2lottie.sqlite
+ADMIN_USER_IDS=123456789
 ```
 
 ### 2. Run container
@@ -93,6 +101,42 @@ BOT_TOKEN=your_bot_token_here
 ```bash
 docker-compose up -d
 ```
+
+SQLite database will be stored on the host in `./data`, because Docker mounts it into `/data` inside the container.
+
+## 📊 Stats and SQLite
+
+- `/stats` is available only to Telegram user IDs listed in `ADMIN_USER_IDS`
+- `/users` shows users 20 at a time with inline pagination
+- `/broadcast` works when admin replies to a message and sends it to users in batches of 50
+- users are upserted automatically on every incoming update
+- every conversion is logged with source format, target format, success/failure, and timestamp
+
+### Inspect SQLite on a VPS
+
+If the bot runs with Docker Compose, the database file will usually be here on the host:
+
+```bash
+./data/sticker2lottie.sqlite
+```
+
+Useful commands:
+
+```bash
+sqlite3 ./data/sticker2lottie.sqlite "select count(*) from users;"
+sqlite3 ./data/sticker2lottie.sqlite "select count(*) from conversion_logs;"
+sqlite3 ./data/sticker2lottie.sqlite "select telegram_user_id, username, conversions_count from users order by conversions_count desc limit 10;"
+sqlite3 ./data/sticker2lottie.sqlite "select source_type, target_type, success, created_at from conversion_logs order by id desc limit 20;"
+```
+
+If `sqlite3` is not installed on the VPS:
+
+```bash
+apk add sqlite
+sqlite3 ./data/sticker2lottie.sqlite
+```
+
+or install `sqlite3` on the host once and query the mounted file directly. The runtime container itself does not include the `sqlite3` CLI by default.
 
 ---
 

@@ -10,7 +10,7 @@ const stickerHandler = async (ctx: Context) => {
   if (!state) return ctx.reply("First select the mode via /convert.");
 
   if (state.mode !== "tgs2lottie") {
-    return ctx.reply("You selected Lottie → TGS. Please send a .json Lottie file as a document.");
+    return ctx.reply("You selected Lottie → TGS. Please send a `.json` or `.lottie` file as a document.");
   }
 
   const fileId = ctx.message?.sticker?.file_id;

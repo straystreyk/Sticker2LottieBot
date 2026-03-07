@@ -1,4 +1,5 @@
 /dist
+/data
 /tmp
 /out-tsc
 
@@ -12,5 +13,6 @@ yarn-error.log*
 .compose.env
 .idea
 .DS_Store
+tgsbot.tar
 
 .vscode/*
