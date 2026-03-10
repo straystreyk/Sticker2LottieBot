@@ -1,4 +1,3 @@
-// ... твои импорты
 import axios from "axios";
 import { fileTypeFromBuffer } from "file-type";
 import zlib from "node:zlib";
@@ -40,8 +39,6 @@ function buildCaption(base: string, lottieJSON: string) {
     return base; // если JSON не парсится — просто базовый caption
   }
 }
-
-
 export const stickerToFile = async (ctx: Context, fileId?: string) => {
   const userId = ctx.from?.id;
   if (!userId) return ctx.reply("No userId passed");

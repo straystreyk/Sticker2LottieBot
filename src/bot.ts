@@ -13,6 +13,10 @@ const setBotCommands = async () => {
       command: "convert",
       description: "Convert .tgs to lottie or lottie to .tgs",
     },
+    {
+      command: "download_pack",
+      description: "Download all stickers from a sticker pack",
+    },
   ];
 
   if (CONFIG.adminUserIds.length > 0) {

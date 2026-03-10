@@ -17,6 +17,8 @@ Working bot: https://t.me/Sticker2LottieBot
 - ✅ Convert **TGS → `.lottie` (v2)**
 - ✅ Convert **TGS → `.json` (Lottie JSON)**
 - ✅ Convert **`.lottie` / `.json` → TGS**
+- ✅ Download a full sticker pack as files
+- ✅ Return unsupported sticker formats like `.webm` / `.webp` without conversion
 - ✅ Interactive flow via buttons (`/convert`)
 - ✅ Persist users and conversion logs in SQLite
 - ✅ Admin stats via `/stats`
@@ -43,6 +45,8 @@ Working bot: https://t.me/Sticker2LottieBot
 3. Send an **animated sticker** (`.tgs`)
 4. Get the result as a file 🎉
 
+If you send a video or static sticker (`.webm` / `.webp`), the bot will return the original file without trying to convert it to Lottie.
+
 ### ✅ Mode: Lottie / JSON → TGS
 
 1. Select **Lottie → TGS**
@@ -50,6 +54,17 @@ Working bot: https://t.me/Sticker2LottieBot
 3. Get the **`.tgs` sticker file** 🎉
 
 > Tip: you can add the resulting `.tgs` to a sticker pack using @Stickers.
+
+### ✅ Download sticker pack
+
+1. Send:
+   ```
+   /download_pack
+   ```
+2. Send the sticker pack short name or link:
+   - `TelegramAnimals`
+   - `https://t.me/addstickers/TelegramAnimals`
+3. The bot will send all stickers from the pack as files
 
 ---
 

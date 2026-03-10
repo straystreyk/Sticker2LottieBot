@@ -1,10 +1,21 @@
 import { stickerToFile } from "../logic/stickerToFile.js";
 import { Context } from "grammy";
-import {convertFlowStore} from "../store/convertTypesStore.js";
+import { convertFlowStore } from "../store/convertTypesStore.js";
+import { downloadPackStore } from "../store/downloadPackStore.js";
+import { downloadStickerSet } from "../logic/downloadStickerSet.js";
 
 const textHandler = async (ctx: Context) => {
   const userId = ctx.from?.id;
   if (!userId) return;
+
+  const text = ctx.message?.text ?? "";
+  if (text.startsWith("/")) return;
+
+  if (downloadPackStore.isAwaiting(userId)) {
+    downloadPackStore.clear(userId);
+    await downloadStickerSet(ctx, text);
+    return;
+  }
 
   const state = convertFlowStore.get(userId);
   if (!state) return ctx.reply("First select the mode via /convert.");

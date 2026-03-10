@@ -1,10 +1,25 @@
 import { stickerToFile } from "../logic/stickerToFile.js";
 import { Context } from "grammy";
-import {convertFlowStore} from "../store/convertTypesStore.js";
+import { convertFlowStore } from "../store/convertTypesStore.js";
+import { downloadTelegramFile } from "../logic/downloadTelegramFile.js";
 
 const stickerHandler = async (ctx: Context) => {
   const userId = ctx.from?.id;
   if (!userId) return;
+
+  const sticker = ctx.message?.sticker;
+  if (!sticker?.file_id) return ctx.reply("No sticker file found.");
+
+  if (sticker.is_video || !sticker.is_animated) {
+    const extension = sticker.is_video ? "webm" : "webp";
+    await downloadTelegramFile(
+      ctx,
+      sticker.file_id,
+      `sticker_${sticker.file_unique_id}.${extension}`,
+      "This sticker format is not converted to Lottie, so I sent you the original file.",
+    );
+    return;
+  }
 
   const state = convertFlowStore.get(userId);
   if (!state) return ctx.reply("First select the mode via /convert.");
@@ -13,10 +28,7 @@ const stickerHandler = async (ctx: Context) => {
     return ctx.reply("You selected Lottie → TGS. Please send a `.json` or `.lottie` file as a document.");
   }
 
-  const fileId = ctx.message?.sticker?.file_id;
-  if (!fileId) return ctx.reply("No sticker file found.");
-
-  await stickerToFile(ctx, fileId);
+  await stickerToFile(ctx, sticker.file_id);
 };
 
 export { stickerHandler };

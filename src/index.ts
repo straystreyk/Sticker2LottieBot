@@ -1,5 +1,6 @@
 import { broadcastCommand } from "./commands/broadcast.js";
 import { convertCommand } from "./commands/convert.js";
+import { downloadPackCommand } from "./commands/downloadPack.js";
 import { statsCommand } from "./commands/stats.js";
 import { usersCommand } from "./commands/users.js";
 import { formatCBQ } from "./cbq/formatCBQ.js";
@@ -23,12 +24,13 @@ const startServer = async () => {
   });
 
   bot.command("convert", convertCommand);
+  bot.command("download_pack", downloadPackCommand);
   bot.command("stats", statsCommand);
   bot.command("users", usersCommand);
   bot.command("broadcast", broadcastCommand);
 
   bot.command("start", (ctx) => {
-    ctx.reply("👋 Hi! Use /convert to choose a direction and then send me the sticker/file.");
+    ctx.reply("👋 Hi! Use /convert for conversion or /download_pack to download a full sticker pack.");
   });
 
   bot.callbackQuery(/^mode:(tgs2lottie|lottie2tgs)$/, modeCBQ);
