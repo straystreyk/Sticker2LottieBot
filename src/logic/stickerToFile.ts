@@ -6,6 +6,7 @@ import JSZip from "jszip";
 import { CONFIG } from "../config.js";
 import { convertFlowStore } from "../store/convertTypesStore.js";
 import { logConversion } from "../db/database.js";
+import { sendDonationPrompt } from "./sendDonationPrompt.js";
 
 function buildCaption(base: string, lottieJSON: string) {
   try {
@@ -116,6 +117,7 @@ export const stickerToFile = async (ctx: Context, fileId?: string) => {
       success: true,
     });
 
+    await sendDonationPrompt(ctx);
     convertFlowStore.clear(userId);
   } catch (e) {
     console.error(e);

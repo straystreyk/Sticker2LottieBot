@@ -3,6 +3,7 @@ import { InputFile } from "grammy";
 import { gzipSync } from "node:zlib";
 import JSZip from "jszip";
 import { logConversion } from "../db/database.js";
+import { sendDonationPrompt } from "./sendDonationPrompt.js";
 
 function getTelegramFileUrl(token: string, filePath: string) {
     return `https://api.telegram.org/file/bot${token}/${filePath}`;
@@ -142,6 +143,8 @@ export async function lottieFileToTgsSticker(ctx: Context, fileId: string) {
             targetType: "tgs",
             success: true,
         });
+
+        await sendDonationPrompt(ctx);
     } catch (error) {
         logConversion({
             telegramUserId: userId,

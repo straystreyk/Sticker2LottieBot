@@ -2,6 +2,7 @@ import axios from "axios";
 import type { Context } from "grammy";
 import { InputFile } from "grammy";
 import { CONFIG } from "../config.js";
+import { sendDonationPrompt } from "./sendDonationPrompt.js";
 
 const getTelegramFileBuffer = async (ctx: Context, fileId: string) => {
   const file = await ctx.api.getFile(fileId);
@@ -32,6 +33,7 @@ export const downloadTelegramFile = async (
   await ctx.replyWithDocument(new InputFile(buffer, sanitizeFileName(fileName)), {
     caption,
   });
+  await sendDonationPrompt(ctx);
 };
 
 export { getTelegramFileBuffer, sanitizeFileName };

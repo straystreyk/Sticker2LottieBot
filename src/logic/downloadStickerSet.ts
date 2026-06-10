@@ -3,6 +3,7 @@ import { InputFile } from "grammy";
 import JSZip from "jszip";
 import { getTelegramFileBuffer, sanitizeFileName } from "./downloadTelegramFile.js";
 import { logConversion } from "../db/database.js";
+import { sendDonationPrompt } from "./sendDonationPrompt.js";
 
 const extractSetName = (value: string) => {
   const trimmed = value.trim();
@@ -102,6 +103,8 @@ export const downloadStickerSet = async (ctx: Context, rawInput: string) => {
       targetType: "files",
       success: true,
     });
+
+    await sendDonationPrompt(ctx);
   } catch (error) {
     console.error(error);
     logConversion({

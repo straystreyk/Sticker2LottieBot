@@ -12,5 +12,7 @@ const adminUserIds = (process.env.ADMIN_USER_IDS || "")
 export const CONFIG = {
   botToken: process.env.BOT_TOKEN || "",
   dbPath: process.env.DB_PATH || "./data/sticker2lottie.sqlite",
+  donationTonAddress:
+    process.env.DONATION_TON_ADDRESS || "UQCAFHfmY6ov2iMzDJMpDSKcRMyC7VSlJKc8bG5raql7kluE",
   adminUserIds,
 };
