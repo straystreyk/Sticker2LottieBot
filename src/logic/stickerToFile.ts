@@ -4,7 +4,7 @@ import zlib from "node:zlib";
 import { Context, InputFile } from "grammy";
 import JSZip from "jszip";
 import { CONFIG } from "../config.js";
-import { convertFlowStore } from "../store/convertTypesStore.js";
+import { convertFlowStore, type Tgs2LottieFormat } from "../store/convertTypesStore.js";
 import { logConversion } from "../db/database.js";
 import { sendDonationPrompt } from "./sendDonationPrompt.js";
 
@@ -45,17 +45,10 @@ export const stickerToFile = async (ctx: Context, fileId?: string) => {
   if (!userId) return ctx.reply("No userId passed");
 
   const state = convertFlowStore.get(userId);
-  if (!state) {
-    return ctx.reply("First use /convert and choose what you want to do.");
-  }
+  let format: Tgs2LottieFormat | undefined = state?.mode === "tgs2lottie" ? state.format : undefined;
 
-  if (state.mode !== "tgs2lottie") {
-    return ctx.reply("You selected Lottie → TGS. Please send a .json Lottie file as a document.");
-  }
-
-  const format = state.format; // "json" | "lottie" | undefined
   if (!format) {
-    return ctx.reply("Choose output format first (json or lottie).");
+    return ctx.reply("Choose output format first via /convert: .json or .lottie.");
   }
 
   const targetType = format === "json" ? "json" : "lottie";
@@ -118,7 +111,6 @@ export const stickerToFile = async (ctx: Context, fileId?: string) => {
     });
 
     await sendDonationPrompt(ctx);
-    convertFlowStore.clear(userId);
   } catch (e) {
     console.error(e);
     logConversion({

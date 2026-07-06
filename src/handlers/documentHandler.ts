@@ -2,16 +2,11 @@
 import type { Context } from "grammy";
 import {convertFlowStore} from "../store/convertTypesStore.js";
 import {lottieFileToTgsSticker} from "../logic/lottieFileToTgsSticker.js";
+import { svgFileToTgsSticker } from "../logic/svgFileToTgsSticker.js";
 
 export const documentHandler = async (ctx: Context) => {
     const userId = ctx.from?.id;
     if (!userId) return;
-
-    const state = convertFlowStore.get(userId);
-
-    if (!state || state.mode !== "lottie2tgs") {
-        return ctx.reply("Use /convert first and choose Lottie → TGS.");
-    }
 
     const doc = ctx.message?.document;
     if (!doc?.file_id) return ctx.reply("No file found.");
@@ -19,12 +14,18 @@ export const documentHandler = async (ctx: Context) => {
     const fileName = doc.file_name?.toLowerCase() ?? "";
     const isJson = fileName.endsWith(".json");
     const isLottie = fileName.endsWith(".lottie");
+    const isSvg = fileName.endsWith(".svg");
 
-    if (!isJson && !isLottie) {
-        return ctx.reply("Please send a Lottie file as `.json` or `.lottie`.");
+    if (!isJson && !isLottie && !isSvg) {
+        return ctx.reply("Please send a Lottie file as `.json` / `.lottie`, or an SVG file as `.svg`.");
     }
 
-    await lottieFileToTgsSticker(ctx, doc.file_id);
+    if (isSvg) {
+        await svgFileToTgsSticker(ctx, doc.file_id);
+        return;
+    }
 
-    convertFlowStore.clear(userId);
+    convertFlowStore.setMode(userId, "lottie2tgs");
+
+    await lottieFileToTgsSticker(ctx, doc.file_id);
 };

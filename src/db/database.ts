@@ -5,7 +5,7 @@ import { CONFIG } from "../config.js";
 
 export type ConversionLogInput = {
   telegramUserId: number;
-  sourceType: "tgs" | "json" | "lottie" | "sticker_pack";
+  sourceType: "tgs" | "json" | "lottie" | "svg" | "sticker_pack";
   targetType: "json" | "lottie" | "tgs" | "files";
   success: boolean;
   errorMessage?: string;

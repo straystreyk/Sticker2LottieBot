@@ -1,6 +1,5 @@
 import { stickerToFile } from "../logic/stickerToFile.js";
 import { Context } from "grammy";
-import { convertFlowStore } from "../store/convertTypesStore.js";
 import { downloadTelegramFile } from "../logic/downloadTelegramFile.js";
 
 const stickerHandler = async (ctx: Context) => {
@@ -19,13 +18,6 @@ const stickerHandler = async (ctx: Context) => {
       "This sticker format is not converted to Lottie, so I sent you the original file.",
     );
     return;
-  }
-
-  const state = convertFlowStore.get(userId);
-  if (!state) return ctx.reply("First select the mode via /convert.");
-
-  if (state.mode !== "tgs2lottie") {
-    return ctx.reply("You selected Lottie → TGS. Please send a `.json` or `.lottie` file as a document.");
   }
 
   await stickerToFile(ctx, sticker.file_id);

@@ -14,9 +14,16 @@ FROM node:22-alpine AS runtime
 WORKDIR /app
 
 ENV NODE_ENV=production
+ENV PATH="/opt/lottie-venv/bin:${PATH}"
 
 COPY package.json package-lock.json ./
-RUN npm ci --omit=dev && npm cache clean --force
+RUN npm ci --omit=dev \
+  && apk add --no-cache python3 \
+  && apk add --no-cache --virtual .lottie-build-deps py3-pip build-base python3-dev \
+  && python3 -m venv /opt/lottie-venv \
+  && /opt/lottie-venv/bin/pip install --no-cache-dir lottie \
+  && apk del .lottie-build-deps \
+  && npm cache clean --force
 
 COPY --from=build /app/dist ./dist
 

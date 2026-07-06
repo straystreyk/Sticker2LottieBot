@@ -1,10 +1,11 @@
 # 🌀 Sticker Converter Telegram Bot (TGS ↔ Lottie)
 
-This Telegram bot converts **Telegram animated stickers (.tgs)** and **Lottie animations (.json / .lottie)** both ways:
+This Telegram bot converts **Telegram animated stickers (.tgs)**, **Lottie animations (.json / .lottie)**, and simple **SVG files**:
 
 - **TGS → Lottie** (`.lottie` v2)
 - **TGS → JSON** (Lottie JSON)
 - **Lottie / JSON → TGS** (Telegram animated sticker)
+- **SVG → TGS** (simple vector shapes)
 
 Perfect for designers, animators, and developers working with Lottie animations.
 
@@ -17,9 +18,11 @@ Working bot: https://t.me/Sticker2LottieBot
 - ✅ Convert **TGS → `.lottie` (v2)**
 - ✅ Convert **TGS → `.json` (Lottie JSON)**
 - ✅ Convert **`.lottie` / `.json` → TGS**
+- ✅ Convert simple **`.svg` → TGS**
 - ✅ Download a full sticker pack as files
 - ✅ Return unsupported sticker formats like `.webm` / `.webp` without conversion
-- ✅ Interactive flow via buttons (`/convert`)
+- ✅ Convert `.json` / `.lottie` files without pre-selecting a mode
+- ✅ Keep the selected TGS export format in memory after `/convert`
 - ✅ Persist users and conversion logs in SQLite
 - ✅ Admin stats via `/stats`
 - ✅ Admin user list via `/users`
@@ -29,31 +32,41 @@ Working bot: https://t.me/Sticker2LottieBot
 
 ## 🚀 How to Use
 
-1. Send the command:
-   ```
-   /convert
-   ```
+You can send `.json`, `.lottie`, or `.svg` files right away. The bot will detect them and return a `.tgs` file.
 
-2. Choose what you want to convert:
-   - **TGS → Lottie**
-   - **Lottie → TGS**
+Use `/convert` when you want to choose how animated `.tgs` stickers should be exported:
+
+- **TGS → Lottie**
+- **TGS → JSON**
+- **Lottie / JSON → TGS**
 
 ### ✅ Mode: TGS → Lottie / JSON
 
 1. Select **TGS → Lottie**
 2. Choose the desired export format (`.lottie` or `.json`)
-3. Send an **animated sticker** (`.tgs`)
+3. Send animated stickers (`.tgs`) anytime
 4. Get the result as a file 🎉
+
+The selected export format stays active in memory, so you do not need to repeat `/convert` before every sticker.
 
 If you send a video or static sticker (`.webm` / `.webp`), the bot will return the original file without trying to convert it to Lottie.
 
 ### ✅ Mode: Lottie / JSON → TGS
 
-1. Select **Lottie → TGS**
-2. Send a **Lottie file** (`.json` or `.lottie`)
-3. Get the **`.tgs` sticker file** 🎉
+1. Send a **Lottie file** (`.json` or `.lottie`)
+2. Get the **`.tgs` sticker file** 🎉
+
+No pre-selection is required for `.json` / `.lottie` files.
 
 > Tip: you can add the resulting `.tgs` to a sticker pack using @Stickers.
+
+### ✅ Mode: SVG → TGS
+
+1. Send a simple **SVG file** (`.svg`)
+2. Get a generated **`.tgs` sticker file** 🎉
+
+Supported SVG elements: `path`, `rect`, `circle`, `ellipse`, `line`, `polyline`, and `polygon`.
+Advanced SVG features like text, filters, masks, embedded images, gradients, and transforms are not fully supported.
 
 ### ✅ Download sticker pack
 
@@ -118,6 +131,15 @@ docker-compose up -d
 ```
 
 SQLite database will be stored on the host in `./data`, because Docker mounts it into `/data` inside the container.
+
+The Docker image installs `python-lottie` for SVG → TGS conversion. To test SVG conversion inside the built image without Telegram:
+
+```bash
+docker run --rm \
+  -v "$PWD":/work \
+  sticker2lottiebot:latest \
+  node dist/scripts/convertSvgFile.js /work/example.svg /tmp/example.tgs
+```
 
 ## 📊 Stats and SQLite
 

@@ -14,5 +14,5 @@ export const convertCommand = async (ctx: Context) => {
       .row()
       .text("Lottie → TGS", "mode:lottie2tgs");
 
-  await ctx.reply("What do you want to convert?", { reply_markup: kb });
+  await ctx.reply("Choose conversion settings:", { reply_markup: kb });
 };

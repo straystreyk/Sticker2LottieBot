@@ -1,5 +1,8 @@
 import type { Context } from "grammy";
 import { InputFile } from "grammy";
+import { mkdtemp, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { gzipSync } from "node:zlib";
 import JSZip from "jszip";
 import { logConversion } from "../db/database.js";
@@ -58,6 +61,11 @@ type LottieMeta = {
     name?: string;
 };
 
+type CompatibilityCheck = {
+    canSendAsSticker: boolean;
+    warnings: string[];
+};
+
 function parseAndInspectLottie(jsonText: string): { jsonText: string; json: any; meta: LottieMeta } {
     const json = JSON.parse(jsonText);
 
@@ -86,9 +94,45 @@ function parseAndInspectLottie(jsonText: string): { jsonText: string; json: any;
     };
 }
 
-function buildCaption(meta: LottieMeta, tgsBytes: number) {
+function inspectTelegramCompatibility(json: any, meta: LottieMeta, tgsBytes: number): CompatibilityCheck {
+    const warnings: string[] = [];
+    let canSendAsSticker = true;
+
+    if (meta.w !== 512 || meta.h !== 512) {
+        warnings.push(`canvas ${meta.w ?? "?"}x${meta.h ?? "?"}; Telegram stickers must be 512x512`);
+        canSendAsSticker = false;
+    }
+
+    if (typeof meta.durationSec === "number" && meta.durationSec > 3) {
+        warnings.push(`duration ${meta.durationSec.toFixed(2)}s; Telegram stickers must be 3s or less`);
+        canSendAsSticker = false;
+    }
+
+    if (typeof meta.fr === "number" && meta.fr > 60) {
+        warnings.push(`frame rate ${meta.fr}fps; Telegram stickers must be 60fps or less`);
+        canSendAsSticker = false;
+    }
+
+    if (tgsBytes > 64 * 1024) {
+        warnings.push(`compressed size ${(tgsBytes / 1024).toFixed(1)}KB; Telegram stickers must be under 64KB`);
+        canSendAsSticker = false;
+    }
+
+    const layers = Array.isArray(json.layers) ? json.layers : [];
+    const imageAssets = Array.isArray(json.assets)
+        ? json.assets.filter((asset: any) => typeof asset?.p === "string" || asset?.e === 1).length
+        : 0;
+    if (imageAssets > 0) {
+        warnings.push(`contains ${imageAssets} image asset(s); Telegram animated stickers must be vector-only`);
+        canSendAsSticker = false;
+    }
+
+    return { canSendAsSticker, warnings };
+}
+
+function buildCaption(meta: LottieMeta, tgsBytes: number, compatibility?: CompatibilityCheck) {
     const parts = [
-        `${meta.w ?? "?"}×${meta.h ?? "?"}`,
+        `${meta.w ?? "?"}x${meta.h ?? "?"}`,
         meta.fr != null ? `${meta.fr}fps` : null,
         meta.durationSec != null ? `${meta.durationSec.toFixed(2)}s` : null,
         meta.layers != null ? `layers: ${meta.layers}` : null,
@@ -96,9 +140,10 @@ function buildCaption(meta: LottieMeta, tgsBytes: number) {
     ].filter(Boolean);
 
     const warnings: string[] = [];
-    if (meta.w !== 512 || meta.h !== 512) warnings.push(`canvas ${meta.w ?? "?"}×${meta.h ?? "?"} (usually 512×512)`);
+    if (meta.w !== 512 || meta.h !== 512) warnings.push(`canvas ${meta.w ?? "?"}x${meta.h ?? "?"} (usually 512x512)`);
     if (typeof meta.fr === "number" && meta.fr > 60) warnings.push(`high fps ${meta.fr} (consider 30/60)`);
     if (typeof meta.durationSec === "number" && meta.durationSec > 3) warnings.push(`long ${meta.durationSec.toFixed(2)}s`);
+    if (compatibility?.warnings.length) warnings.push(...compatibility.warnings);
 
     const lines = [
         "🧩 Here is your .tgs file",
@@ -109,6 +154,21 @@ function buildCaption(meta: LottieMeta, tgsBytes: number) {
 
     const caption = lines.join("\n");
     return caption.length > 1024 ? caption.slice(0, 1020) + "…" : caption;
+}
+
+async function replyWithTgsDocument(ctx: Context, tgs: Buffer, caption: string) {
+    const dir = await mkdtemp(join(tmpdir(), "sticker2lottie-"));
+    const filePath = join(dir, "sticker.tgs");
+
+    try {
+        await writeFile(filePath, tgs);
+        await ctx.replyWithDocument(new InputFile(filePath), {
+            caption,
+            disable_content_type_detection: true,
+        });
+    } finally {
+        await rm(dir, { recursive: true, force: true });
+    }
 }
 
 export async function lottieFileToTgsSticker(ctx: Context, fileId: string) {
@@ -128,14 +188,59 @@ export async function lottieFileToTgsSticker(ctx: Context, fileId: string) {
         const buf = await downloadAsBuffer(url);
         const jsonText = await extractLottieJson(buf, documentFileName);
 
-        const { meta } = parseAndInspectLottie(jsonText);
+        const { json, meta } = parseAndInspectLottie(jsonText);
 
         // .tgs = gzip(Lottie JSON)
         const tgs = gzipSync(Buffer.from(jsonText, "utf-8"), { level: 9 });
+        const compatibility = inspectTelegramCompatibility(json, meta, tgs.byteLength);
+        const caption = buildCaption(meta, tgs.byteLength, compatibility);
 
-        // ✅ send as DOCUMENT so we can attach caption (stickers cannot have captions)
-        await ctx.reply(buildCaption(meta, tgs.byteLength))
-        await ctx.replyWithSticker(new InputFile(tgs, "sticker.tgs"));
+        if (!compatibility.canSendAsSticker) {
+            await ctx.reply(
+                [
+                    "Telegram will not accept this file as an animated sticker.",
+                    "I sent the converted .tgs as a file instead.",
+                ].join("\n"),
+            );
+            await replyWithTgsDocument(ctx, tgs, caption);
+
+            logConversion({
+                telegramUserId: userId,
+                sourceType,
+                targetType: "tgs",
+                success: false,
+                errorMessage: compatibility.warnings.join("; "),
+            });
+
+            await sendDonationPrompt(ctx);
+            return;
+        }
+
+        await ctx.reply(caption);
+        try {
+            await ctx.replyWithSticker(new InputFile(tgs, "sticker.tgs"));
+        } catch (sendError) {
+            const message = sendError instanceof Error ? sendError.message : "Telegram rejected the sticker upload";
+            await ctx.reply(
+                [
+                    "Telegram rejected this .tgs as a sticker.",
+                    "I sent the converted .tgs as a file instead.",
+                    `Reason: ${message}`,
+                ].join("\n"),
+            );
+            await replyWithTgsDocument(ctx, tgs, caption);
+
+            logConversion({
+                telegramUserId: userId,
+                sourceType,
+                targetType: "tgs",
+                success: false,
+                errorMessage: message,
+            });
+
+            await sendDonationPrompt(ctx);
+            return;
+        }
 
         logConversion({
             telegramUserId: userId,

@@ -30,7 +30,14 @@ const startServer = async () => {
   bot.command("broadcast", broadcastCommand);
 
   bot.command("start", (ctx) => {
-    ctx.reply("👋 Hi! Use /convert for conversion or /download_pack to download a full sticker pack.");
+    ctx.reply(
+      [
+        "👋 Hi! Send me a .json or .lottie file and I will return a .tgs sticker.",
+        "You can also send a simple .svg file and I will try to convert it to .tgs.",
+        "Use /convert to choose how animated .tgs stickers should be exported.",
+        "Use /download_pack to download a full sticker pack.",
+      ].join("\n"),
+    );
   });
 
   bot.callbackQuery(/^mode:(tgs2lottie|lottie2tgs)$/, modeCBQ);
