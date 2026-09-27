@@ -1,12 +1,16 @@
 import type { Context } from "grammy";
-import { InputFile } from "grammy";
+import { InlineKeyboard, InputFile } from "grammy";
 import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { gzipSync } from "node:zlib";
 import JSZip from "jszip";
-import { logConversion } from "../db/database.js";
-import { sendDonationPrompt } from "./sendDonationPrompt.js";
+import { logConversion, logProductEvent } from "../db/database.js";
+import { autoFixStore } from "../store/autoFixStore.js";
+import { resultStore } from "../store/resultStore.js";
+import { sendDonationPromptSafely, sendPostConversionMessages } from "./resultActions.js";
+import { tr } from "../i18n.js";
+import { recordSentResult } from "./conversionHistory.js";
 
 function getTelegramFileUrl(token: string, filePath: string) {
     return `https://api.telegram.org/file/bot${token}/${filePath}`;
@@ -19,7 +23,7 @@ async function downloadAsBuffer(url: string): Promise<Buffer> {
     return Buffer.from(arr);
 }
 
-async function extractLottieJson(buf: Buffer, fileName?: string) {
+export async function extractLottieJson(buf: Buffer, fileName?: string) {
     const normalizedFileName = fileName?.toLowerCase() ?? "";
     const isArchive = normalizedFileName.endsWith(".lottie");
 
@@ -66,7 +70,7 @@ type CompatibilityCheck = {
     warnings: string[];
 };
 
-function parseAndInspectLottie(jsonText: string): { jsonText: string; json: any; meta: LottieMeta } {
+export function parseAndInspectLottie(jsonText: string): { jsonText: string; json: any; meta: LottieMeta } {
     const json = JSON.parse(jsonText);
 
     if (!json || typeof json !== "object") throw new Error("Invalid JSON");
@@ -94,7 +98,7 @@ function parseAndInspectLottie(jsonText: string): { jsonText: string; json: any;
     };
 }
 
-function inspectTelegramCompatibility(json: any, meta: LottieMeta, tgsBytes: number): CompatibilityCheck {
+export function inspectTelegramCompatibility(json: any, meta: LottieMeta, tgsBytes: number): CompatibilityCheck {
     const warnings: string[] = [];
     let canSendAsSticker = true;
 
@@ -156,13 +160,13 @@ function buildCaption(meta: LottieMeta, tgsBytes: number, compatibility?: Compat
     return caption.length > 1024 ? caption.slice(0, 1020) + "…" : caption;
 }
 
-async function replyWithTgsDocument(ctx: Context, tgs: Buffer, caption: string) {
+export async function replyWithTgsDocument(ctx: Context, tgs: Buffer, caption: string) {
     const dir = await mkdtemp(join(tmpdir(), "sticker2lottie-"));
     const filePath = join(dir, "sticker.tgs");
 
     try {
         await writeFile(filePath, tgs);
-        await ctx.replyWithDocument(new InputFile(filePath), {
+        return await ctx.replyWithDocument(new InputFile(filePath), {
             caption,
             disable_content_type_detection: true,
         });
@@ -184,6 +188,7 @@ export async function lottieFileToTgsSticker(ctx: Context, fileId: string) {
     if (!token) throw new Error("BOT_TOKEN is not set.");
 
     try {
+        logProductEvent(userId, "conversion_started", { source_type: sourceType, target_type: "tgs" });
         const url = getTelegramFileUrl(token, file.file_path);
         const buf = await downloadAsBuffer(url);
         const jsonText = await extractLottieJson(buf, documentFileName);
@@ -196,29 +201,61 @@ export async function lottieFileToTgsSticker(ctx: Context, fileId: string) {
         const caption = buildCaption(meta, tgs.byteLength, compatibility);
 
         if (!compatibility.canSendAsSticker) {
+            autoFixStore.set(userId, { jsonText, sourceType });
             await ctx.reply(
                 [
                     "Telegram will not accept this file as an animated sticker.",
                     "I sent the converted .tgs as a file instead.",
                 ].join("\n"),
             );
-            await replyWithTgsDocument(ctx, tgs, caption);
+            const sentDocument = await replyWithTgsDocument(ctx, tgs, caption);
+            recordSentResult({
+                telegramUserId: userId,
+                message: sentDocument,
+                sourceType,
+                targetType: "tgs",
+                fileName: "sticker.tgs",
+            });
 
             logConversion({
                 telegramUserId: userId,
                 sourceType,
                 targetType: "tgs",
                 success: false,
+                outcome: "completed_with_warnings",
                 errorMessage: compatibility.warnings.join("; "),
             });
 
-            await sendDonationPrompt(ctx);
+            logProductEvent(userId, "autofix_offered", {
+                source_type: sourceType,
+                warnings: compatibility.warnings,
+            });
+            await ctx.reply(tr(
+                ctx,
+                "I can try to resize, shorten, reduce FPS and compact this animation automatically.",
+                "Я могу автоматически изменить размер, сократить длительность, снизить FPS и сжать анимацию.",
+            ), {
+                reply_markup: new InlineKeyboard().text(tr(ctx, "✨ Fix automatically", "✨ Исправить автоматически"), "autofix:latest"),
+            });
+
+            await sendDonationPromptSafely(ctx);
             return;
         }
 
         await ctx.reply(caption);
         try {
-            await ctx.replyWithSticker(new InputFile(tgs, "sticker.tgs"));
+            const sentSticker = await ctx.replyWithSticker(new InputFile(tgs, "sticker.tgs"));
+            if (sentSticker.sticker?.file_id) {
+                resultStore.set(userId, { fileId: sentSticker.sticker.file_id, emoji: "✨" });
+            }
+            recordSentResult({
+                telegramUserId: userId,
+                message: sentSticker,
+                sourceType,
+                targetType: "tgs",
+                fileName: "sticker.tgs",
+                emoji: "✨",
+            });
         } catch (sendError) {
             const message = sendError instanceof Error ? sendError.message : "Telegram rejected the sticker upload";
             await ctx.reply(
@@ -228,17 +265,25 @@ export async function lottieFileToTgsSticker(ctx: Context, fileId: string) {
                     `Reason: ${message}`,
                 ].join("\n"),
             );
-            await replyWithTgsDocument(ctx, tgs, caption);
+            const sentDocument = await replyWithTgsDocument(ctx, tgs, caption);
+            recordSentResult({
+                telegramUserId: userId,
+                message: sentDocument,
+                sourceType,
+                targetType: "tgs",
+                fileName: "sticker.tgs",
+            });
 
             logConversion({
                 telegramUserId: userId,
                 sourceType,
                 targetType: "tgs",
                 success: false,
+                outcome: "rejected_by_telegram",
                 errorMessage: message,
             });
 
-            await sendDonationPrompt(ctx);
+            await sendDonationPromptSafely(ctx);
             return;
         }
 
@@ -249,15 +294,112 @@ export async function lottieFileToTgsSticker(ctx: Context, fileId: string) {
             success: true,
         });
 
-        await sendDonationPrompt(ctx);
+        logProductEvent(userId, "conversion_completed", {
+            source_type: sourceType,
+            target_type: "tgs",
+            telegram_compatible: true,
+        });
+
+        await sendPostConversionMessages(ctx, { canAddToPack: true });
     } catch (error) {
         logConversion({
             telegramUserId: userId,
             sourceType,
             targetType: "tgs",
             success: false,
+            outcome: "failed",
             errorMessage: error instanceof Error ? error.message : "Unknown processing error",
+        });
+        logProductEvent(userId, "conversion_failed", {
+            source_type: sourceType,
+            target_type: "tgs",
+            error: error instanceof Error ? error.message : "Unknown processing error",
         });
         throw error;
     }
+}
+
+function transformVectorProperty(
+    property: any,
+    transform: (value: number[], kind: "start" | "end") => number[],
+) {
+    if (!property || !Array.isArray(property.k)) return;
+    if (property.k.every((item: unknown) => typeof item === "number")) {
+        property.k = transform(property.k, "start");
+        return;
+    }
+
+    for (const keyframe of property.k) {
+        if (!keyframe || typeof keyframe !== "object") continue;
+        if (Array.isArray(keyframe.s)) keyframe.s = transform(keyframe.s, "start");
+        if (Array.isArray(keyframe.e)) keyframe.e = transform(keyframe.e, "end");
+    }
+}
+
+function scaleAnimationTimes(value: any, factor: number) {
+    if (!value || typeof value !== "object") return;
+    if (Array.isArray(value)) {
+        for (const item of value) scaleAnimationTimes(item, factor);
+        return;
+    }
+
+    if (typeof value.t === "number" && (Array.isArray(value.s) || Array.isArray(value.e))) {
+        value.t *= factor;
+    }
+    for (const child of Object.values(value)) scaleAnimationTimes(child, factor);
+}
+
+export function autoFixLottieJson(jsonText: string) {
+    const json = JSON.parse(jsonText);
+    const changes: string[] = [];
+
+    const width = typeof json.w === "number" && json.w > 0 ? json.w : 512;
+    const height = typeof json.h === "number" && json.h > 0 ? json.h : 512;
+    if (width !== 512 || height !== 512) {
+        const scaleX = 512 / width;
+        const scaleY = 512 / height;
+        for (const layer of Array.isArray(json.layers) ? json.layers : []) {
+            if (layer?.parent != null) continue;
+            transformVectorProperty(layer?.ks?.p, (values) => [
+                (values[0] ?? 0) * scaleX,
+                (values[1] ?? 0) * scaleY,
+                ...values.slice(2),
+            ]);
+            transformVectorProperty(layer?.ks?.s, (values) => [
+                (values[0] ?? 100) * scaleX,
+                (values[1] ?? 100) * scaleY,
+                ...values.slice(2),
+            ]);
+        }
+        json.w = 512;
+        json.h = 512;
+        changes.push(`canvas ${width}x${height} → 512x512`);
+    }
+
+    if (typeof json.fr === "number" && json.fr > 60) {
+        const factor = 60 / json.fr;
+        if (typeof json.ip === "number") json.ip *= factor;
+        if (typeof json.op === "number") json.op *= factor;
+        for (const layer of Array.isArray(json.layers) ? json.layers : []) {
+            if (typeof layer.ip === "number") layer.ip *= factor;
+            if (typeof layer.op === "number") layer.op *= factor;
+            if (typeof layer.st === "number") layer.st *= factor;
+        }
+        scaleAnimationTimes(json.layers, factor);
+        changes.push(`fps ${json.fr} → 60`);
+        json.fr = 60;
+    }
+
+    if (
+        typeof json.fr === "number" &&
+        json.fr > 0 &&
+        typeof json.ip === "number" &&
+        typeof json.op === "number" &&
+        (json.op - json.ip) / json.fr > 3
+    ) {
+        json.op = json.ip + json.fr * 3;
+        changes.push("duration → 3s");
+    }
+
+    return { jsonText: JSON.stringify(json), changes };
 }

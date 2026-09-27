@@ -1,13 +1,19 @@
 import type { Context } from "grammy";
-import { downloadPackStore } from "../store/downloadPackStore.js";
+import { InlineKeyboard } from "grammy";
+import { tr } from "../i18n.js";
 
 export const downloadPackCommand = async (ctx: Context) => {
   const userId = ctx.from?.id;
   if (!userId) return;
 
-  downloadPackStore.setAwaiting(userId);
+  const keyboard = new InlineKeyboard()
+    .text(tr(ctx, "Original files", "Оригиналы"), "packdl:files")
+    .row()
+    .text("JSON", "packdl:json")
+    .text("Lottie", "packdl:lottie");
+
   await ctx.reply(
-    "Send a sticker pack name or link, for example: `TelegramAnimals` or `https://t.me/addstickers/TelegramAnimals`.",
-    { parse_mode: "Markdown" },
+    tr(ctx, "Choose the ZIP contents:", "Что положить в ZIP-архив?"),
+    { reply_markup: keyboard },
   );
 };

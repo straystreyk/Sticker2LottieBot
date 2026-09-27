@@ -1,18 +1,21 @@
 import { InlineKeyboard } from "grammy";
 import type { Context } from "grammy";
-import {convertFlowStore} from "../store/convertTypesStore.js";
+import { tr } from "../i18n.js";
 
 export const convertCommand = async (ctx: Context) => {
   const userId = ctx.from?.id;
   if (!userId) return;
 
-  // Можно сбрасывать прошлый выбор при новом /convert
-  convertFlowStore.clear(userId);
-
   const kb = new InlineKeyboard()
-      .text("TGS → Lottie", "mode:tgs2lottie")
-      .row()
-      .text("Lottie → TGS", "mode:lottie2tgs");
+      .text(".lottie", "format:lottie")
+      .text(".json", "format:json");
 
-  await ctx.reply("Choose conversion settings:", { reply_markup: kb });
+  await ctx.reply(
+    tr(
+      ctx,
+      "Choose the default output for animated TGS stickers. JSON, Lottie and SVG files are converted to TGS automatically.",
+      "Выберите формат по умолчанию для анимированных TGS-стикеров. JSON, Lottie и SVG конвертируются в TGS автоматически.",
+    ),
+    { reply_markup: kb },
+  );
 };

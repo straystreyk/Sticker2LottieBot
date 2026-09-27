@@ -1,0 +1,15 @@
+{
+  "0": "database.ts",
+  "1": "downloadStickerSet.ts",
+  "2": "ConvertFlowStore",
+  "3": "index.ts",
+  "4": "starsPaymentHandler.ts",
+  "8": "svgFileToTgsSticker.ts",
+  "12": "lottieFileToTgsSticker.ts",
+  "13": "package.json",
+  "14": "/graphify",
+  "15": "🌀 Sticker Converter Telegram Bot (TGS ↔ Lottie)",
+  "16": "compilerOptions",
+  "17": "convertSvgFile.ts",
+  "18": "AGENTS.md"
+}

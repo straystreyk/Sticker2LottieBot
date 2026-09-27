@@ -8,6 +8,7 @@ type ConvertState =
 
 class ConvertFlowStore {
     private map = new Map<number, ConvertState>();
+    private pendingStickerFiles = new Map<number, string>();
 
     setMode(userId: number, mode: ConvertMode) {
         if (mode === "tgs2lottie") this.map.set(userId, { mode, format: undefined });
@@ -26,6 +27,16 @@ class ConvertFlowStore {
 
     clear(userId: number) {
         this.map.delete(userId);
+    }
+
+    setPendingSticker(userId: number, fileId: string) {
+        this.pendingStickerFiles.set(userId, fileId);
+    }
+
+    takePendingSticker(userId: number) {
+        const fileId = this.pendingStickerFiles.get(userId);
+        this.pendingStickerFiles.delete(userId);
+        return fileId;
     }
 }
 

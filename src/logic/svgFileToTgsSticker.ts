@@ -8,8 +8,11 @@ import { join, resolve } from "node:path";
 import { promisify } from "node:util";
 import { gzipSync } from "node:zlib";
 import { CONFIG } from "../config.js";
-import { logConversion } from "../db/database.js";
-import { sendDonationPrompt } from "./sendDonationPrompt.js";
+import { logConversion, logProductEvent } from "../db/database.js";
+import { resultStore } from "../store/resultStore.js";
+import { sendDonationPromptSafely, sendPostConversionMessages } from "./resultActions.js";
+import { recordSentResult } from "./conversionHistory.js";
+import { tr } from "../i18n.js";
 
 type Point = [number, number];
 
@@ -930,7 +933,7 @@ async function replyWithTgsDocument(ctx: Context, tgs: Buffer, caption: string) 
 
   try {
     await writeFile(filePath, tgs);
-    await ctx.replyWithDocument(new InputFile(filePath), {
+    return await ctx.replyWithDocument(new InputFile(filePath), {
       caption,
       disable_content_type_detection: true,
     });
@@ -944,6 +947,7 @@ export async function svgFileToTgsSticker(ctx: Context, fileId: string) {
   if (!userId) throw new Error("No userId passed.");
 
   try {
+    logProductEvent(userId, "conversion_started", { source_type: "svg", target_type: "tgs" });
     const file = await ctx.api.getFile(fileId);
     if (!file.file_path) throw new Error("Telegram file_path is empty.");
 
@@ -971,22 +975,48 @@ export async function svgFileToTgsSticker(ctx: Context, fileId: string) {
     }
 
     if (sizeWarnings.length) {
-      await ctx.reply("Telegram may reject this SVG because the generated .tgs is larger than 64KB. I sent it as a file.");
-      await replyWithTgsDocument(ctx, tgs, caption);
+      await ctx.reply(
+        tr(
+          ctx,
+          "Telegram may reject this SVG because the generated TGS is larger than 64 KB. I sent it as a file.",
+          "Telegram может отклонить этот SVG: получившийся TGS больше 64 КБ. Я отправил его как файл.",
+        ),
+      );
+      const sentDocument = await replyWithTgsDocument(ctx, tgs, caption);
+      recordSentResult({
+        telegramUserId: userId,
+        message: sentDocument,
+        sourceType: "svg",
+        targetType: "tgs",
+        fileName: "sticker.tgs",
+      });
       logConversion({
         telegramUserId: userId,
         sourceType: "svg",
         targetType: "tgs",
         success: false,
+        outcome: "completed_with_warnings",
         errorMessage: [conversionWarning, ...sizeWarnings].filter(Boolean).join("; "),
       });
-      await sendDonationPrompt(ctx);
+      await sendDonationPromptSafely(ctx);
       return;
     }
 
     await ctx.reply(caption);
+    let telegramAccepted = false;
     try {
-      await ctx.replyWithSticker(new InputFile(tgs, "sticker.tgs"));
+      const sentSticker = await ctx.replyWithSticker(new InputFile(tgs, "sticker.tgs"));
+      if (sentSticker.sticker?.file_id) {
+        resultStore.set(userId, { fileId: sentSticker.sticker.file_id, emoji: "✨" });
+      }
+      recordSentResult({
+        telegramUserId: userId,
+        message: sentSticker,
+        sourceType: "svg",
+        targetType: "tgs",
+        fileName: "sticker.tgs",
+        emoji: "✨",
+      });
       logConversion({
         telegramUserId: userId,
         sourceType: "svg",
@@ -994,27 +1024,57 @@ export async function svgFileToTgsSticker(ctx: Context, fileId: string) {
         success: true,
         errorMessage: conversionWarning,
       });
+      logProductEvent(userId, "conversion_completed", {
+        source_type: "svg",
+        target_type: "tgs",
+        telegram_compatible: true,
+      });
+      telegramAccepted = true;
     } catch (sendError) {
       const message = sendError instanceof Error ? sendError.message : "Telegram rejected the sticker upload";
-      await ctx.reply(["Telegram rejected this .tgs as a sticker.", "I sent it as a file instead.", `Reason: ${message}`].join("\n"));
-      await replyWithTgsDocument(ctx, tgs, caption);
+      await ctx.reply(
+        tr(
+          ctx,
+          ["Telegram rejected this TGS as a sticker.", "I sent it as a file instead.", `Reason: ${message}`].join("\n"),
+          ["Telegram отклонил TGS как стикер.", "Я отправил его как обычный файл.", `Причина: ${message}`].join("\n"),
+        ),
+      );
+      const sentDocument = await replyWithTgsDocument(ctx, tgs, caption);
+      recordSentResult({
+        telegramUserId: userId,
+        message: sentDocument,
+        sourceType: "svg",
+        targetType: "tgs",
+        fileName: "sticker.tgs",
+      });
       logConversion({
         telegramUserId: userId,
         sourceType: "svg",
         targetType: "tgs",
         success: false,
+        outcome: "rejected_by_telegram",
         errorMessage: message,
       });
     }
 
-    await sendDonationPrompt(ctx);
+    if (telegramAccepted) {
+      await sendPostConversionMessages(ctx, { canAddToPack: true });
+    } else {
+      await sendDonationPromptSafely(ctx);
+    }
   } catch (error) {
     logConversion({
       telegramUserId: userId,
       sourceType: "svg",
       targetType: "tgs",
       success: false,
+      outcome: "failed",
       errorMessage: error instanceof Error ? error.message : "Unknown processing error",
+    });
+    logProductEvent(userId, "conversion_failed", {
+      source_type: "svg",
+      target_type: "tgs",
+      error: error instanceof Error ? error.message : "Unknown processing error",
     });
     throw error;
   }

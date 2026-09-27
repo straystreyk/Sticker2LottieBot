@@ -1,15 +1,36 @@
-const awaitingPackNameUsers = new Set<number>();
+export type PackOutputFormat = "files" | "json" | "lottie";
+
+type DownloadPackState = {
+  output?: PackOutputFormat;
+  pendingInput?: string;
+};
+
+const states = new Map<number, DownloadPackState>();
 
 export const downloadPackStore = {
-  setAwaiting(userId: number) {
-    awaitingPackNameUsers.add(userId);
+  setAwaiting(userId: number, output: PackOutputFormat) {
+    states.set(userId, { output });
   },
 
   isAwaiting(userId: number) {
-    return awaitingPackNameUsers.has(userId);
+    return Boolean(states.get(userId)?.output);
+  },
+
+  getOutput(userId: number) {
+    return states.get(userId)?.output;
+  },
+
+  setPendingInput(userId: number, pendingInput: string) {
+    states.set(userId, { pendingInput });
+  },
+
+  takePendingInput(userId: number) {
+    const input = states.get(userId)?.pendingInput;
+    states.delete(userId);
+    return input;
   },
 
   clear(userId: number) {
-    awaitingPackNameUsers.delete(userId);
+    states.delete(userId);
   },
 };

@@ -3,6 +3,7 @@ import type { CallbackQueryMiddleware, Context } from "grammy";
 import { InlineKeyboard } from "grammy";
 import {convertFlowStore} from "../store/convertTypesStore.js";
 import { setUserMode } from "../db/database.js";
+import { tr } from "../i18n.js";
 
 export const modeCBQ: CallbackQueryMiddleware<Context> = async (ctx) => {
     const mode = ctx.match[1] as "tgs2lottie" | "lottie2tgs";
@@ -20,9 +21,15 @@ export const modeCBQ: CallbackQueryMiddleware<Context> = async (ctx) => {
             .row()
             .text("as .json", "format:json");
 
-        return ctx.reply("Choose output format:", { reply_markup: kb });
+        return ctx.reply(tr(ctx, "Choose output format:", "Выберите выходной формат:"), { reply_markup: kb });
     }
 
     // lottie2tgs
-    return ctx.reply("Send me a Lottie file (.json or .lottie) and I will return a .tgs sticker.");
+    return ctx.reply(
+        tr(
+            ctx,
+            "Send a Lottie file (.json or .lottie) and I will return a .tgs sticker.",
+            "Отправьте Lottie-файл (.json или .lottie), и я верну .tgs-стикер.",
+        ),
+    );
 };

@@ -19,11 +19,20 @@ Working bot: https://t.me/Sticker2LottieBot
 - ✅ Convert **TGS → `.json` (Lottie JSON)**
 - ✅ Convert **`.lottie` / `.json` → TGS**
 - ✅ Convert simple **`.svg` → TGS**
-- ✅ Download a full sticker pack as files
+- ✅ Auto-detect the conversion direction without a mode-selection step
+- ✅ Remember the selected TGS output format across restarts
+- ✅ Offer one-tap auto-fix for canvas size, duration, FPS, and JSON size
+- ✅ Create a personal sticker pack and add generated stickers to it
+- ✅ Download a full sticker pack as originals, JSON, or Lottie files
+- ✅ Russian and English interface
+- ✅ Referral deep links and post-conversion share actions
+- ✅ Voluntary support through Telegram Stars or a permanently visible TON wallet
+- ✅ Persistent **My Studio** history with favorites and one-tap re-downloads
+- ✅ Personal inline gallery for sending recent results to any chat
+- ✅ Sticker Doctor for TGS/Lottie/SVG files and full sticker packs
+- ✅ Animated sticker pack builder with ordering, emoji editing, cover selection, and publishing
 - ✅ Return unsupported sticker formats like `.webm` / `.webp` without conversion
-- ✅ Convert `.json` / `.lottie` files without pre-selecting a mode
-- ✅ Keep the selected TGS export format in memory after `/convert`
-- ✅ Persist users and conversion logs in SQLite
+- ✅ Product-funnel events, conversion outcomes, users, and settings in SQLite
 - ✅ Admin stats via `/stats`
 - ✅ Admin user list via `/users`
 - ✅ Batched broadcast via `/broadcast` as reply
@@ -32,22 +41,20 @@ Working bot: https://t.me/Sticker2LottieBot
 
 ## 🚀 How to Use
 
-You can send `.json`, `.lottie`, or `.svg` files right away. The bot will detect them and return a `.tgs` file.
+Send an animated sticker, `.json`, `.lottie`, or `.svg` file right away. The bot detects the direction automatically.
 
-Use `/convert` when you want to choose how animated `.tgs` stickers should be exported:
+Use `/convert` or `/settings` to choose how animated `.tgs` stickers should be exported:
 
 - **TGS → Lottie**
 - **TGS → JSON**
-- **Lottie / JSON → TGS**
 
 ### ✅ Mode: TGS → Lottie / JSON
 
-1. Select **TGS → Lottie**
-2. Choose the desired export format (`.lottie` or `.json`)
-3. Send animated stickers (`.tgs`) anytime
-4. Get the result as a file 🎉
+1. Send an animated sticker
+2. On first use, choose `.lottie` or `.json`
+3. Get the result as a file 🎉
 
-The selected export format stays active in memory, so you do not need to repeat `/convert` before every sticker.
+The selected export format is persisted in SQLite, so it survives bot restarts.
 
 If you send a video or static sticker (`.webm` / `.webp`), the bot will return the original file without trying to convert it to Lottie.
 
@@ -58,7 +65,11 @@ If you send a video or static sticker (`.webm` / `.webp`), the bot will return t
 
 No pre-selection is required for `.json` / `.lottie` files.
 
-> Tip: you can add the resulting `.tgs` to a sticker pack using @Stickers.
+After a successful conversion, tap **Add to my sticker pack**. The bot creates and manages a personal animated sticker pack for the user.
+
+The post-conversion support card and `/support` command offer 50, 100, or 250 Telegram Stars and keep the TON wallet visible. A Stars payment is recorded only after Telegram sends a successful payment confirmation. Use `/paysupport` if a payment needs assistance.
+
+If the animation violates Telegram limits, the bot sends the generated TGS as a file and offers **Fix automatically**. Auto-fix can resize the canvas, reduce FPS, shorten the animation to three seconds, and compact JSON. Raster image assets still require manual vectorization.
 
 ### ✅ Mode: SVG → TGS
 
@@ -68,16 +79,36 @@ No pre-selection is required for `.json` / `.lottie` files.
 Supported SVG elements: `path`, `rect`, `circle`, `ellipse`, `line`, `polyline`, and `polygon`.
 Advanced SVG features like text, filters, masks, embedded images, gradients, and transforms are not fully supported.
 
+### ✅ My Studio and inline gallery
+
+- `/my` opens saved conversion results. New results are persisted in SQLite and can be favorited or sent again without re-uploading.
+- Tap **Send to this chat** or type `@YourBotUsername` in any chat to open the personal inline gallery.
+- Enable inline mode once in `@BotFather` with `/setinline`. Enable chosen-result feedback with `/setinlinefeedback` to measure actual sends.
+
+### ✅ Sticker Doctor
+
+1. Send `/doctor`.
+2. Send an animated sticker, `.tgs`, `.json`, `.lottie`, `.svg`, or a sticker pack link.
+3. Receive a compatibility score, file metrics, limit violations, and an auto-fix button when applicable.
+
+### ✅ Sticker pack builder
+
+1. Convert files into Telegram-ready animated stickers.
+2. Open `/my` and add results to the builder.
+3. Open `/pack_builder` to reorder stickers, edit emoji, and choose the cover by moving a sticker to the first position.
+4. Publish the pack after entering a title. Builder contents remain in SQLite until publication or manual clearing.
+
 ### ✅ Download sticker pack
 
 1. Send:
    ```
    /download_pack
    ```
-2. Send the sticker pack short name or link:
+2. Choose originals, JSON, or Lottie output
+3. Send the sticker pack short name or link:
    - `TelegramAnimals`
    - `https://t.me/addstickers/TelegramAnimals`
-3. The bot will send all stickers from the pack as files
+4. The bot will send a ZIP archive. JSON/Lottie modes convert animated TGS stickers and report skipped static/video stickers.
 
 ---
 
@@ -104,6 +135,8 @@ npm install
 BOT_TOKEN=your_bot_token_here
 DB_PATH=./data/sticker2lottie.sqlite
 ADMIN_USER_IDS=123456789
+DONATION_TON_ADDRESS=your_ton_address
+BOT_STARTUP_TIMEOUT_MS=15000
 ```
 
 ### 4. Run the bot
@@ -111,6 +144,26 @@ ADMIN_USER_IDS=123456789
 ```bash
 npm run start
 ```
+
+### Startup diagnostics
+
+A healthy long-polling startup prints these events:
+
+```text
+startup.begin
+telegram.authenticated  # includes the bot ID and @username
+commands.registered
+telegram.webhook_status
+bot.started
+```
+
+Every incoming update then prints `update.received` and `update.processed` without logging message text or file contents. Handler failures are printed as `update.failed` and do not silently stop polling.
+
+- `BOT_TOKEN is empty` means the variable was not loaded.
+- `401 Unauthorized` means the token is invalid or was revoked.
+- `409 Conflict` usually means another process is polling with the same token.
+- `Telegram getMe timed out` means DNS/HTTPS access to `api.telegram.org:443` is blocked or unavailable.
+- `npm start` reads `.env`; Docker Compose reads `.compose.env` from `docker-compose.yml`.
 
 ---
 
@@ -122,6 +175,8 @@ npm run start
 BOT_TOKEN=your_bot_token_here
 DB_PATH=/data/sticker2lottie.sqlite
 ADMIN_USER_IDS=123456789
+DONATION_TON_ADDRESS=your_ton_address
+BOT_STARTUP_TIMEOUT_MS=15000
 ```
 
 ### 2. Run container
@@ -145,9 +200,11 @@ docker run --rm \
 
 - `/stats` is available only to Telegram user IDs listed in `ADMIN_USER_IDS`
 - `/users` shows users 20 at a time with inline pagination
-- `/broadcast` works when admin replies to a message and sends it to users in batches of 50
+- `/broadcast` works when admin replies to a message and sends it to opted-in users in batches of 50
 - users are upserted automatically on every incoming update
-- every conversion is logged with source format, target format, success/failure, and timestamp
+- every conversion is logged with source format, target format, outcome, and timestamp
+- `product_events` stores onboarding, file, conversion, auto-fix, referral, and sticker-pack funnel events
+- public command menus do not expose admin-only commands
 
 ### Inspect SQLite on a VPS
 

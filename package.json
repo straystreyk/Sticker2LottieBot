@@ -8,10 +8,12 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "@types/node": "^24.0.13",
+    "abort-controller": "^3.0.0",
     "axios": "^1.10.0",
     "dotenv": "^17.2.0",
     "file-type": "^21.0.0",
