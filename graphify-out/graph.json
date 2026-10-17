@@ -486,8 +486,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_cbq_doctorcbq",
-      "community": 3,
-      "community_name": "index.ts",
+      "community": 5,
+      "community_name": "textHandler.ts",
       "norm_label": "doctorcbq.ts"
     },
     {
@@ -498,8 +498,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_cbq_doctorcbq_doctorstartcbq",
-      "community": 3,
-      "community_name": "index.ts",
+      "community": 5,
+      "community_name": "textHandler.ts",
       "norm_label": "doctorstartcbq()"
     },
     {
@@ -521,8 +521,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_cbq_downloadpackcbq",
-      "community": 2,
-      "community_name": "stickerToFile.ts",
+      "community": 12,
+      "community_name": "logProductEvent",
       "norm_label": "downloadpackcbq.ts"
     },
     {
@@ -625,8 +625,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_cbq_onboardingcbq_onboardingcbq",
-      "community": 12,
-      "community_name": "logProductEvent",
+      "community": 3,
+      "community_name": "index.ts",
       "norm_label": "onboardingcbq()"
     },
     {
@@ -872,8 +872,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_cbq_studiocbq",
-      "community": 1,
-      "community_name": "studioCBQ.ts",
+      "community": 3,
+      "community_name": "index.ts",
       "norm_label": "studiocbq.ts"
     },
     {
@@ -884,8 +884,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_cbq_studiocbq_itemtext",
-      "community": 1,
-      "community_name": "studioCBQ.ts",
+      "community": 3,
+      "community_name": "index.ts",
       "norm_label": "itemtext()"
     },
     {
@@ -896,8 +896,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_cbq_studiocbq_itemkeyboard",
-      "community": 1,
-      "community_name": "studioCBQ.ts",
+      "community": 3,
+      "community_name": "index.ts",
       "norm_label": "itemkeyboard()"
     },
     {
@@ -920,8 +920,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_cbq_studiocbq_studioviewcbq",
-      "community": 1,
-      "community_name": "studioCBQ.ts",
+      "community": 3,
+      "community_name": "index.ts",
       "norm_label": "studioviewcbq()"
     },
     {
@@ -932,8 +932,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_cbq_studiocbq_studiofavoritecbq",
-      "community": 1,
-      "community_name": "studioCBQ.ts",
+      "community": 3,
+      "community_name": "index.ts",
       "norm_label": "studiofavoritecbq()"
     },
     {
@@ -1036,8 +1036,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_commands_doctor",
-      "community": 3,
-      "community_name": "index.ts",
+      "community": 5,
+      "community_name": "textHandler.ts",
       "norm_label": "doctor.ts"
     },
     {
@@ -1048,8 +1048,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_commands_doctor_startdoctor",
-      "community": 3,
-      "community_name": "index.ts",
+      "community": 5,
+      "community_name": "textHandler.ts",
       "norm_label": "startdoctor()"
     },
     {
@@ -1060,8 +1060,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_commands_doctor_doctorcommand",
-      "community": 3,
-      "community_name": "index.ts",
+      "community": 5,
+      "community_name": "textHandler.ts",
       "norm_label": "doctorcommand()"
     },
     {
@@ -1163,8 +1163,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_commands_start",
-      "community": 1,
-      "community_name": "studioCBQ.ts",
+      "community": 3,
+      "community_name": "index.ts",
       "norm_label": "start.ts"
     },
     {
@@ -1175,8 +1175,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_commands_start_startcommand",
-      "community": 1,
-      "community_name": "studioCBQ.ts",
+      "community": 3,
+      "community_name": "index.ts",
       "norm_label": "startcommand()"
     },
     {
@@ -1244,8 +1244,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_commands_studio",
-      "community": 1,
-      "community_name": "studioCBQ.ts",
+      "community": 3,
+      "community_name": "index.ts",
       "norm_label": "studio.ts"
     },
     {
@@ -1255,8 +1255,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_commands_studio_studio_page_size",
-      "community": 1,
-      "community_name": "studioCBQ.ts",
+      "community": 3,
+      "community_name": "index.ts",
       "norm_label": "studio_page_size"
     },
     {
@@ -1267,8 +1267,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_commands_studio_resultlabel",
-      "community": 1,
-      "community_name": "studioCBQ.ts",
+      "community": 3,
+      "community_name": "index.ts",
       "norm_label": "resultlabel()"
     },
     {
@@ -1279,8 +1279,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_commands_studio_buildstudiopage",
-      "community": 1,
-      "community_name": "studioCBQ.ts",
+      "community": 3,
+      "community_name": "index.ts",
       "norm_label": "buildstudiopage()"
     },
     {
@@ -1291,8 +1291,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_commands_studio_studiocommand",
-      "community": 1,
-      "community_name": "studioCBQ.ts",
+      "community": 3,
+      "community_name": "index.ts",
       "norm_label": "studiocommand()"
     },
     {
@@ -1967,8 +1967,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_db_database_setuserstartattribution",
-      "community": 1,
-      "community_name": "studioCBQ.ts",
+      "community": 3,
+      "community_name": "index.ts",
       "norm_label": "setuserstartattribution()"
     },
     {
@@ -2039,8 +2039,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_db_database_getconversionresultspage",
-      "community": 1,
-      "community_name": "studioCBQ.ts",
+      "community": 3,
+      "community_name": "index.ts",
       "norm_label": "getconversionresultspage()"
     },
     {
@@ -2051,8 +2051,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_db_database_getconversionresult",
-      "community": 1,
-      "community_name": "studioCBQ.ts",
+      "community": 3,
+      "community_name": "index.ts",
       "norm_label": "getconversionresult()"
     },
     {
@@ -2075,8 +2075,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_db_database_toggleconversionresultfavorite",
-      "community": 1,
-      "community_name": "studioCBQ.ts",
+      "community": 3,
+      "community_name": "index.ts",
       "norm_label": "toggleconversionresultfavorite()"
     },
     {
@@ -2136,7 +2136,7 @@
       "_origin": "ast",
       "id": "src_db_database_updatestickerpackbuilderemoji",
       "community": 5,
-      "community_name": "publishStickerPack.ts",
+      "community_name": "textHandler.ts",
       "norm_label": "updatestickerpackbuilderemoji()"
     },
     {
@@ -2148,7 +2148,7 @@
       "_origin": "ast",
       "id": "src_db_database_clearstickerpackbuilder",
       "community": 5,
-      "community_name": "publishStickerPack.ts",
+      "community_name": "textHandler.ts",
       "norm_label": "clearstickerpackbuilder()"
     },
     {
@@ -2206,8 +2206,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_handlers_documenthandler",
-      "community": 2,
-      "community_name": "stickerToFile.ts",
+      "community": 12,
+      "community_name": "logProductEvent",
       "norm_label": "documenthandler.ts"
     },
     {
@@ -2218,8 +2218,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_handlers_documenthandler_documenthandler",
-      "community": 3,
-      "community_name": "index.ts",
+      "community": 12,
+      "community_name": "logProductEvent",
       "norm_label": "documenthandler()"
     },
     {
@@ -2322,8 +2322,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_handlers_texthandler",
-      "community": 2,
-      "community_name": "stickerToFile.ts",
+      "community": 5,
+      "community_name": "textHandler.ts",
       "norm_label": "texthandler.ts"
     },
     {
@@ -2334,8 +2334,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_handlers_texthandler_texthandler",
-      "community": 3,
-      "community_name": "index.ts",
+      "community": 5,
+      "community_name": "textHandler.ts",
       "norm_label": "texthandler()"
     },
     {
@@ -2817,10 +2817,70 @@
       "norm_label": "lottiefiletotgssticker()"
     },
     {
-      "label": "transformVectorProperty()",
+      "label": "scaleTranslateValues()",
       "file_type": "code",
       "source_file": "src/logic/lottieFileToTgsSticker.ts",
       "source_location": "L322",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_logic_lottiefiletotgssticker_scaletranslatevalues",
+      "community": 12,
+      "community_name": "logProductEvent",
+      "norm_label": "scaletranslatevalues()"
+    },
+    {
+      "label": "scaleValues()",
+      "file_type": "code",
+      "source_file": "src/logic/lottieFileToTgsSticker.ts",
+      "source_location": "L330",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_logic_lottiefiletotgssticker_scalevalues",
+      "community": 12,
+      "community_name": "logProductEvent",
+      "norm_label": "scalevalues()"
+    },
+    {
+      "label": "isSplitDimensionProperty()",
+      "file_type": "code",
+      "source_file": "src/logic/lottieFileToTgsSticker.ts",
+      "source_location": "L338",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_logic_lottiefiletotgssticker_issplitdimensionproperty",
+      "community": 12,
+      "community_name": "logProductEvent",
+      "norm_label": "issplitdimensionproperty()"
+    },
+    {
+      "label": "scaleSplitDimensionComponent()",
+      "file_type": "code",
+      "source_file": "src/logic/lottieFileToTgsSticker.ts",
+      "source_location": "L347",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_logic_lottiefiletotgssticker_scalesplitdimensioncomponent",
+      "community": 12,
+      "community_name": "logProductEvent",
+      "norm_label": "scalesplitdimensioncomponent()"
+    },
+    {
+      "label": "scaleSpatialTangents()",
+      "file_type": "code",
+      "source_file": "src/logic/lottieFileToTgsSticker.ts",
+      "source_location": "L365",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_logic_lottiefiletotgssticker_scalespatialtangents",
+      "community": 12,
+      "community_name": "logProductEvent",
+      "norm_label": "scalespatialtangents()"
+    },
+    {
+      "label": "transformVectorProperty()",
+      "file_type": "code",
+      "source_file": "src/logic/lottieFileToTgsSticker.ts",
+      "source_location": "L378",
       "_callable": true,
       "_origin": "ast",
       "id": "src_logic_lottiefiletotgssticker_transformvectorproperty",
@@ -2832,7 +2892,7 @@
       "label": "scaleAnimationTimes()",
       "file_type": "code",
       "source_file": "src/logic/lottieFileToTgsSticker.ts",
-      "source_location": "L339",
+      "source_location": "L395",
       "_callable": true,
       "_origin": "ast",
       "id": "src_logic_lottiefiletotgssticker_scaleanimationtimes",
@@ -2844,7 +2904,7 @@
       "label": "autoFixLottieJson()",
       "file_type": "code",
       "source_file": "src/logic/lottieFileToTgsSticker.ts",
-      "source_location": "L352",
+      "source_location": "L408",
       "_callable": true,
       "_origin": "ast",
       "id": "src_logic_lottiefiletotgssticker_autofixlottiejson",
@@ -2860,7 +2920,7 @@
       "_origin": "ast",
       "id": "src_logic_publishstickerpack",
       "community": 5,
-      "community_name": "publishStickerPack.ts",
+      "community_name": "textHandler.ts",
       "norm_label": "publishstickerpack.ts"
     },
     {
@@ -2872,7 +2932,7 @@
       "_origin": "ast",
       "id": "src_logic_publishstickerpack_firstemoji",
       "community": 5,
-      "community_name": "publishStickerPack.ts",
+      "community_name": "textHandler.ts",
       "norm_label": "firstemoji()"
     },
     {
@@ -2884,7 +2944,7 @@
       "_origin": "ast",
       "id": "src_logic_publishstickerpack_buildstickersetname",
       "community": 5,
-      "community_name": "publishStickerPack.ts",
+      "community_name": "textHandler.ts",
       "norm_label": "buildstickersetname()"
     },
     {
@@ -2896,7 +2956,7 @@
       "_origin": "ast",
       "id": "src_logic_publishstickerpack_handlestickerpackbuildertext",
       "community": 5,
-      "community_name": "publishStickerPack.ts",
+      "community_name": "textHandler.ts",
       "norm_label": "handlestickerpackbuildertext()"
     },
     {
@@ -2953,8 +3013,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_logic_senddonationprompt",
-      "community": 12,
-      "community_name": "logProductEvent",
+      "community": 4,
+      "community_name": "starsPaymentHandler.ts",
       "norm_label": "senddonationprompt.ts"
     },
     {
@@ -2965,8 +3025,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_logic_senddonationprompt_senddonationprompt",
-      "community": 12,
-      "community_name": "logProductEvent",
+      "community": 3,
+      "community_name": "index.ts",
       "norm_label": "senddonationprompt()"
     },
     {
@@ -3997,8 +4057,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_store_doctorstore",
-      "community": 2,
-      "community_name": "stickerToFile.ts",
+      "community": 5,
+      "community_name": "textHandler.ts",
       "norm_label": "doctorstore.ts"
     },
     {
@@ -4010,8 +4070,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_store_doctorstore_doctorstore",
-      "community": 2,
-      "community_name": "stickerToFile.ts",
+      "community": 5,
+      "community_name": "textHandler.ts",
       "norm_label": "doctorstore"
     },
     {
@@ -4022,8 +4082,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_store_doctorstore_doctorstore_start",
-      "community": 2,
-      "community_name": "stickerToFile.ts",
+      "community": 5,
+      "community_name": "textHandler.ts",
       "norm_label": ".start()"
     },
     {
@@ -4034,8 +4094,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_store_doctorstore_doctorstore_isawaiting",
-      "community": 2,
-      "community_name": "stickerToFile.ts",
+      "community": 5,
+      "community_name": "textHandler.ts",
       "norm_label": ".isawaiting()"
     },
     {
@@ -4046,8 +4106,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_store_doctorstore_doctorstore_take",
-      "community": 2,
-      "community_name": "stickerToFile.ts",
+      "community": 5,
+      "community_name": "textHandler.ts",
       "norm_label": ".take()"
     },
     {
@@ -4058,8 +4118,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_store_doctorstore_doctorstore_clear",
-      "community": 2,
-      "community_name": "stickerToFile.ts",
+      "community": 5,
+      "community_name": "textHandler.ts",
       "norm_label": ".clear()"
     },
     {
@@ -4069,8 +4129,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_store_downloadpackstore",
-      "community": 2,
-      "community_name": "stickerToFile.ts",
+      "community": 12,
+      "community_name": "logProductEvent",
       "norm_label": "downloadpackstore.ts"
     },
     {
@@ -4082,8 +4142,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_store_downloadpackstore_packoutputformat",
-      "community": 2,
-      "community_name": "stickerToFile.ts",
+      "community": 12,
+      "community_name": "logProductEvent",
       "norm_label": "packoutputformat"
     },
     {
@@ -4095,8 +4155,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_store_downloadpackstore_downloadpackstate",
-      "community": 2,
-      "community_name": "stickerToFile.ts",
+      "community": 12,
+      "community_name": "logProductEvent",
       "norm_label": "downloadpackstate"
     },
     {
@@ -4106,8 +4166,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_store_downloadpackstore_states",
-      "community": 2,
-      "community_name": "stickerToFile.ts",
+      "community": 12,
+      "community_name": "logProductEvent",
       "norm_label": "states"
     },
     {
@@ -4117,8 +4177,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_store_downloadpackstore_downloadpackstore",
-      "community": 2,
-      "community_name": "stickerToFile.ts",
+      "community": 12,
+      "community_name": "logProductEvent",
       "norm_label": "downloadpackstore"
     },
     {
@@ -4190,7 +4250,7 @@
       "_origin": "ast",
       "id": "src_store_stickerpackbuilderstore",
       "community": 5,
-      "community_name": "publishStickerPack.ts",
+      "community_name": "textHandler.ts",
       "norm_label": "stickerpackbuilderstore.ts"
     },
     {
@@ -4203,7 +4263,7 @@
       "_origin": "ast",
       "id": "src_store_stickerpackbuilderstore_stickerpackbuilderpendinginput",
       "community": 5,
-      "community_name": "publishStickerPack.ts",
+      "community_name": "textHandler.ts",
       "norm_label": "stickerpackbuilderpendinginput"
     },
     {
@@ -4216,7 +4276,7 @@
       "_origin": "ast",
       "id": "src_store_stickerpackbuilderstore_stickerpackbuilderstore",
       "community": 5,
-      "community_name": "publishStickerPack.ts",
+      "community_name": "textHandler.ts",
       "norm_label": "stickerpackbuilderstore"
     },
     {
@@ -4228,7 +4288,7 @@
       "_origin": "ast",
       "id": "src_store_stickerpackbuilderstore_stickerpackbuilderstore_set",
       "community": 5,
-      "community_name": "publishStickerPack.ts",
+      "community_name": "textHandler.ts",
       "norm_label": ".set()"
     },
     {
@@ -4240,7 +4300,7 @@
       "_origin": "ast",
       "id": "src_store_stickerpackbuilderstore_stickerpackbuilderstore_get",
       "community": 5,
-      "community_name": "publishStickerPack.ts",
+      "community_name": "textHandler.ts",
       "norm_label": ".get()"
     },
     {
@@ -4252,7 +4312,7 @@
       "_origin": "ast",
       "id": "src_store_stickerpackbuilderstore_stickerpackbuilderstore_clear",
       "community": 5,
-      "community_name": "publishStickerPack.ts",
+      "community_name": "textHandler.ts",
       "norm_label": ".clear()"
     },
     {
@@ -5067,6 +5127,160 @@
       "id": "graphify_out_memory_query_20260927_200021_\u043a\u0430\u043a\u0438\u0435_\u043d\u043e\u0432\u044b\u0435_\u043f\u0440\u043e\u0434\u0443\u043a\u0442\u043e\u0432\u044b\u0435_\u0444\u0443\u043d\u043a\u0446\u0438\u0438_\u043b\u0443\u0447\u0448\u0435_\u0432\u0441\u0435\u0433\u043e_\u043f\u043e\u0432\u044b\u0441\u044f_source_nodes",
       "community": 7,
       "community_name": "Q: \u041a\u0430\u043a\u0438\u0435 \u043d\u043e\u0432\u044b\u0435 \u043f\u0440\u043e\u0434\u0443\u043a\u0442\u043e\u0432\u044b\u0435 \u0444\u0443\u043d\u043a\u0446\u0438\u0438 \u043b\u0443\u0447\u0448\u0435 \u0432\u0441\u0435\u0433\u043e \u043f\u043e\u0432\u044b\u0441\u044f\u0442 \u043a\u043e\u043d\u0432\u0435\u0440\u0441\u0438\u044e, \u0432\u043e\u0432\u043b\u0435\u0447\u0451\u043d\u043d\u043e\u0441\u0442\u044c \u0438 \u0443\u0434\u0435\u0440\u0436\u0430\u043d\u0438\u0435 Sticker2LottieBot?",
+      "norm_label": "source nodes"
+    },
+    {
+      "label": "query_20260928_045530_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b__\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435.md",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260928_045530_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b__\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260928_045530_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b_\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435",
+      "community": 19,
+      "community_name": "Q: \u041a\u0430\u043a \u041c\u043e\u044f \u0441\u0442\u0443\u0434\u0438\u044f \u0445\u0440\u0430\u043d\u0438\u0442 \u0441\u0442\u0438\u043a\u0435\u0440\u044b: \u0444\u0430\u0439\u043b\u0430\u043c\u0438 \u043d\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0435 \u0438\u043b\u0438 \u0441\u0441\u044b\u043b\u043a\u0430\u043c\u0438 Telegram?",
+      "norm_label": "query_20260928_045530_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b__\u0444\u0430\u0438\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435.md"
+    },
+    {
+      "label": "Q: \u041a\u0430\u043a \u041c\u043e\u044f \u0441\u0442\u0443\u0434\u0438\u044f \u0445\u0440\u0430\u043d\u0438\u0442 \u0441\u0442\u0438\u043a\u0435\u0440\u044b: \u0444\u0430\u0439\u043b\u0430\u043c\u0438 \u043d\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0435 \u0438\u043b\u0438 \u0441\u0441\u044b\u043b\u043a\u0430\u043c\u0438 Telegram?",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260928_045530_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b__\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435.md",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260928_045530_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b_\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435_q_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b_\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435_\u0438\u043b\u0438_\u0441\u0441\u044b\u043b\u043a\u0430\u043c\u0438_telegram",
+      "community": 19,
+      "community_name": "Q: \u041a\u0430\u043a \u041c\u043e\u044f \u0441\u0442\u0443\u0434\u0438\u044f \u0445\u0440\u0430\u043d\u0438\u0442 \u0441\u0442\u0438\u043a\u0435\u0440\u044b: \u0444\u0430\u0439\u043b\u0430\u043c\u0438 \u043d\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0435 \u0438\u043b\u0438 \u0441\u0441\u044b\u043b\u043a\u0430\u043c\u0438 Telegram?",
+      "norm_label": "q: \u043a\u0430\u043a \u043c\u043e\u044f \u0441\u0442\u0443\u0434\u0438\u044f \u0445\u0440\u0430\u043d\u0438\u0442 \u0441\u0442\u0438\u043a\u0435\u0440\u044b: \u0444\u0430\u0438\u043b\u0430\u043c\u0438 \u043d\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0435 \u0438\u043b\u0438 \u0441\u0441\u044b\u043b\u043a\u0430\u043c\u0438 telegram?"
+    },
+    {
+      "label": "Answer",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260928_045530_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b__\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435.md",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260928_045530_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b_\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435_answer",
+      "community": 19,
+      "community_name": "Q: \u041a\u0430\u043a \u041c\u043e\u044f \u0441\u0442\u0443\u0434\u0438\u044f \u0445\u0440\u0430\u043d\u0438\u0442 \u0441\u0442\u0438\u043a\u0435\u0440\u044b: \u0444\u0430\u0439\u043b\u0430\u043c\u0438 \u043d\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0435 \u0438\u043b\u0438 \u0441\u0441\u044b\u043b\u043a\u0430\u043c\u0438 Telegram?",
+      "norm_label": "answer"
+    },
+    {
+      "label": "Source Nodes",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260928_045530_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b__\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435.md",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260928_045530_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b_\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435_source_nodes",
+      "community": 19,
+      "community_name": "Q: \u041a\u0430\u043a \u041c\u043e\u044f \u0441\u0442\u0443\u0434\u0438\u044f \u0445\u0440\u0430\u043d\u0438\u0442 \u0441\u0442\u0438\u043a\u0435\u0440\u044b: \u0444\u0430\u0439\u043b\u0430\u043c\u0438 \u043d\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0435 \u0438\u043b\u0438 \u0441\u0441\u044b\u043b\u043a\u0430\u043c\u0438 Telegram?",
+      "norm_label": "source nodes"
+    },
+    {
+      "label": "query_20260928_103839_analyze_unusually_high_failed_conversion_count_in.md",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260928_103839_analyze_unusually_high_failed_conversion_count_in.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260928_103839_analyze_unusually_high_failed_conversion_count_in",
+      "community": 1,
+      "community_name": "Q: Analyze unusually high failed conversion count in bot statistics",
+      "norm_label": "query_20260928_103839_analyze_unusually_high_failed_conversion_count_in.md"
+    },
+    {
+      "label": "Q: Analyze unusually high failed conversion count in bot statistics",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260928_103839_analyze_unusually_high_failed_conversion_count_in.md",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260928_103839_analyze_unusually_high_failed_conversion_count_in_q_analyze_unusually_high_failed_conversion_count_in_bot_statistics",
+      "community": 1,
+      "community_name": "Q: Analyze unusually high failed conversion count in bot statistics",
+      "norm_label": "q: analyze unusually high failed conversion count in bot statistics"
+    },
+    {
+      "label": "Answer",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260928_103839_analyze_unusually_high_failed_conversion_count_in.md",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260928_103839_analyze_unusually_high_failed_conversion_count_in_answer",
+      "community": 1,
+      "community_name": "Q: Analyze unusually high failed conversion count in bot statistics",
+      "norm_label": "answer"
+    },
+    {
+      "label": "Outcome",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260928_103839_analyze_unusually_high_failed_conversion_count_in.md",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260928_103839_analyze_unusually_high_failed_conversion_count_in_outcome",
+      "community": 1,
+      "community_name": "Q: Analyze unusually high failed conversion count in bot statistics",
+      "norm_label": "outcome"
+    },
+    {
+      "label": "Source Nodes",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260928_103839_analyze_unusually_high_failed_conversion_count_in.md",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260928_103839_analyze_unusually_high_failed_conversion_count_in_source_nodes",
+      "community": 1,
+      "community_name": "Q: Analyze unusually high failed conversion count in bot statistics",
+      "norm_label": "source nodes"
+    },
+    {
+      "label": "query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448.md",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448",
+      "community": 11,
+      "community_name": "Q: \u041a\u0430\u043a\u0438\u0435 \u0444\u0438\u0447\u0438 \u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0432 Sticker2LottieBot \u0438 \u043a\u0430\u043a \u043b\u0443\u0447\u0448\u0435 \u043f\u0440\u043e\u0434\u0432\u0438\u0433\u0430\u0442\u044c \u0431\u043e\u0442 \u0441 \u0443\u0447\u0435\u0442\u043e\u043c \u0442\u0435\u043a\u0443\u0449\u0435\u0439 \u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0438?",
+      "norm_label": "query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448.md"
+    },
+    {
+      "label": "Q: \u041a\u0430\u043a\u0438\u0435 \u0444\u0438\u0447\u0438 \u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0432 Sticker2LottieBot \u0438 \u043a\u0430\u043a \u043b\u0443\u0447\u0448\u0435 \u043f\u0440\u043e\u0434\u0432\u0438\u0433\u0430\u0442\u044c \u0431\u043e\u0442 \u0441 \u0443\u0447\u0435\u0442\u043e\u043c \u0442\u0435\u043a\u0443\u0449\u0435\u0439 \u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0438?",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448.md",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448_q_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448\u0435_\u043f\u0440\u043e\u0434\u0432\u0438\u0433\u0430\u0442\u044c_\u0431\u043e\u0442_\u0441_\u0443\u0447\u0435\u0442\u043e\u043c_\u0442\u0435\u043a\u0443\u0449\u0435\u0439_\u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0438",
+      "community": 11,
+      "community_name": "Q: \u041a\u0430\u043a\u0438\u0435 \u0444\u0438\u0447\u0438 \u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0432 Sticker2LottieBot \u0438 \u043a\u0430\u043a \u043b\u0443\u0447\u0448\u0435 \u043f\u0440\u043e\u0434\u0432\u0438\u0433\u0430\u0442\u044c \u0431\u043e\u0442 \u0441 \u0443\u0447\u0435\u0442\u043e\u043c \u0442\u0435\u043a\u0443\u0449\u0435\u0439 \u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0438?",
+      "norm_label": "q: \u043a\u0430\u043a\u0438\u0435 \u0444\u0438\u0447\u0438 \u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0432 sticker2lottiebot \u0438 \u043a\u0430\u043a \u043b\u0443\u0447\u0448\u0435 \u043f\u0440\u043e\u0434\u0432\u0438\u0433\u0430\u0442\u044c \u0431\u043e\u0442 \u0441 \u0443\u0447\u0435\u0442\u043e\u043c \u0442\u0435\u043a\u0443\u0449\u0435\u0438 \u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0438?"
+    },
+    {
+      "label": "Answer",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448.md",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448_answer",
+      "community": 11,
+      "community_name": "Q: \u041a\u0430\u043a\u0438\u0435 \u0444\u0438\u0447\u0438 \u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0432 Sticker2LottieBot \u0438 \u043a\u0430\u043a \u043b\u0443\u0447\u0448\u0435 \u043f\u0440\u043e\u0434\u0432\u0438\u0433\u0430\u0442\u044c \u0431\u043e\u0442 \u0441 \u0443\u0447\u0435\u0442\u043e\u043c \u0442\u0435\u043a\u0443\u0449\u0435\u0439 \u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0438?",
+      "norm_label": "answer"
+    },
+    {
+      "label": "Outcome",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448.md",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448_outcome",
+      "community": 11,
+      "community_name": "Q: \u041a\u0430\u043a\u0438\u0435 \u0444\u0438\u0447\u0438 \u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0432 Sticker2LottieBot \u0438 \u043a\u0430\u043a \u043b\u0443\u0447\u0448\u0435 \u043f\u0440\u043e\u0434\u0432\u0438\u0433\u0430\u0442\u044c \u0431\u043e\u0442 \u0441 \u0443\u0447\u0435\u0442\u043e\u043c \u0442\u0435\u043a\u0443\u0449\u0435\u0439 \u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0438?",
+      "norm_label": "outcome"
+    },
+    {
+      "label": "Source Nodes",
+      "file_type": "document",
+      "source_file": "graphify-out/memory/query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448.md",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "graphify_out_memory_query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448_source_nodes",
+      "community": 11,
+      "community_name": "Q: \u041a\u0430\u043a\u0438\u0435 \u0444\u0438\u0447\u0438 \u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0432 Sticker2LottieBot \u0438 \u043a\u0430\u043a \u043b\u0443\u0447\u0448\u0435 \u043f\u0440\u043e\u0434\u0432\u0438\u0433\u0430\u0442\u044c \u0431\u043e\u0442 \u0441 \u0443\u0447\u0435\u0442\u043e\u043c \u0442\u0435\u043a\u0443\u0449\u0435\u0439 \u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0438?",
       "norm_label": "source nodes"
     }
   ],
@@ -14829,7 +15043,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/logic/lottieFileToTgsSticker.ts",
-      "source_location": "L352",
+      "source_location": "L408",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_logic_lottiefiletotgssticker",
@@ -14906,6 +15120,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/logic/lottieFileToTgsSticker.ts",
+      "source_location": "L338",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_logic_lottiefiletotgssticker",
+      "target": "src_logic_lottiefiletotgssticker_issplitdimensionproperty",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/logic/lottieFileToTgsSticker.ts",
       "source_location": "L178",
       "weight": 1.0,
       "_origin": "ast",
@@ -14950,7 +15175,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/logic/lottieFileToTgsSticker.ts",
-      "source_location": "L339",
+      "source_location": "L395",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_logic_lottiefiletotgssticker",
@@ -14961,7 +15186,51 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/logic/lottieFileToTgsSticker.ts",
+      "source_location": "L365",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_logic_lottiefiletotgssticker",
+      "target": "src_logic_lottiefiletotgssticker_scalespatialtangents",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/logic/lottieFileToTgsSticker.ts",
+      "source_location": "L347",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_logic_lottiefiletotgssticker",
+      "target": "src_logic_lottiefiletotgssticker_scalesplitdimensioncomponent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/logic/lottieFileToTgsSticker.ts",
       "source_location": "L322",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_logic_lottiefiletotgssticker",
+      "target": "src_logic_lottiefiletotgssticker_scaletranslatevalues",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/logic/lottieFileToTgsSticker.ts",
+      "source_location": "L330",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_logic_lottiefiletotgssticker",
+      "target": "src_logic_lottiefiletotgssticker_scalevalues",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/logic/lottieFileToTgsSticker.ts",
+      "source_location": "L378",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_logic_lottiefiletotgssticker",
@@ -15273,7 +15542,67 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/logic/lottieFileToTgsSticker.ts",
-      "source_location": "L363",
+      "source_location": "L432",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_logic_lottiefiletotgssticker_autofixlottiejson",
+      "target": "src_logic_lottiefiletotgssticker_scaletranslatevalues",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/logic/lottieFileToTgsSticker.ts",
+      "source_location": "L444",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_logic_lottiefiletotgssticker_autofixlottiejson",
+      "target": "src_logic_lottiefiletotgssticker_scalevalues",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/logic/lottieFileToTgsSticker.ts",
+      "source_location": "L428",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_logic_lottiefiletotgssticker_autofixlottiejson",
+      "target": "src_logic_lottiefiletotgssticker_issplitdimensionproperty",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/logic/lottieFileToTgsSticker.ts",
+      "source_location": "L429",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_logic_lottiefiletotgssticker_autofixlottiejson",
+      "target": "src_logic_lottiefiletotgssticker_scalesplitdimensioncomponent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/logic/lottieFileToTgsSticker.ts",
+      "source_location": "L433",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_logic_lottiefiletotgssticker_autofixlottiejson",
+      "target": "src_logic_lottiefiletotgssticker_scalespatialtangents",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/logic/lottieFileToTgsSticker.ts",
+      "source_location": "L432",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_logic_lottiefiletotgssticker_autofixlottiejson",
@@ -15285,7 +15614,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/logic/lottieFileToTgsSticker.ts",
-      "source_location": "L388",
+      "source_location": "L463",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_logic_lottiefiletotgssticker_autofixlottiejson",
@@ -18264,8 +18593,129 @@
       "source": "graphify_out_memory_query_20260927_200021_\u043a\u0430\u043a\u0438\u0435_\u043d\u043e\u0432\u044b\u0435_\u043f\u0440\u043e\u0434\u0443\u043a\u0442\u043e\u0432\u044b\u0435_\u0444\u0443\u043d\u043a\u0446\u0438\u0438_\u043b\u0443\u0447\u0448\u0435_\u0432\u0441\u0435\u0433\u043e_\u043f\u043e\u0432\u044b\u0441\u044f_q_\u043a\u0430\u043a\u0438\u0435_\u043d\u043e\u0432\u044b\u0435_\u043f\u0440\u043e\u0434\u0443\u043a\u0442\u043e\u0432\u044b\u0435_\u0444\u0443\u043d\u043a\u0446\u0438\u0438_\u043b\u0443\u0447\u0448\u0435_\u0432\u0441\u0435\u0433\u043e_\u043f\u043e\u0432\u044b\u0441\u044f\u0442_\u043a\u043e\u043d\u0432\u0435\u0440\u0441\u0438\u044e_\u0432\u043e\u0432\u043b\u0435\u0447\u0451\u043d\u043d\u043e\u0441\u0442\u044c_\u0438_\u0443\u0434\u0435\u0440\u0436\u0430\u043d\u0438\u0435_sticker2lottiebot",
       "target": "graphify_out_memory_query_20260927_200021_\u043a\u0430\u043a\u0438\u0435_\u043d\u043e\u0432\u044b\u0435_\u043f\u0440\u043e\u0434\u0443\u043a\u0442\u043e\u0432\u044b\u0435_\u0444\u0443\u043d\u043a\u0446\u0438\u0438_\u043b\u0443\u0447\u0448\u0435_\u0432\u0441\u0435\u0433\u043e_\u043f\u043e\u0432\u044b\u0441\u044f_source_nodes",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260928_045530_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b__\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435.md",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260928_045530_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b_\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435",
+      "target": "graphify_out_memory_query_20260928_045530_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b_\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435_q_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b_\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435_\u0438\u043b\u0438_\u0441\u0441\u044b\u043b\u043a\u0430\u043c\u0438_telegram",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260928_045530_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b__\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435.md",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260928_045530_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b_\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435_q_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b_\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435_\u0438\u043b\u0438_\u0441\u0441\u044b\u043b\u043a\u0430\u043c\u0438_telegram",
+      "target": "graphify_out_memory_query_20260928_045530_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b_\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435_answer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260928_045530_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b__\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435.md",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260928_045530_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b_\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435_q_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b_\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435_\u0438\u043b\u0438_\u0441\u0441\u044b\u043b\u043a\u0430\u043c\u0438_telegram",
+      "target": "graphify_out_memory_query_20260928_045530_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b_\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435_source_nodes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260928_103839_analyze_unusually_high_failed_conversion_count_in.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260928_103839_analyze_unusually_high_failed_conversion_count_in",
+      "target": "graphify_out_memory_query_20260928_103839_analyze_unusually_high_failed_conversion_count_in_q_analyze_unusually_high_failed_conversion_count_in_bot_statistics",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260928_103839_analyze_unusually_high_failed_conversion_count_in.md",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260928_103839_analyze_unusually_high_failed_conversion_count_in_q_analyze_unusually_high_failed_conversion_count_in_bot_statistics",
+      "target": "graphify_out_memory_query_20260928_103839_analyze_unusually_high_failed_conversion_count_in_answer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260928_103839_analyze_unusually_high_failed_conversion_count_in.md",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260928_103839_analyze_unusually_high_failed_conversion_count_in_q_analyze_unusually_high_failed_conversion_count_in_bot_statistics",
+      "target": "graphify_out_memory_query_20260928_103839_analyze_unusually_high_failed_conversion_count_in_outcome",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260928_103839_analyze_unusually_high_failed_conversion_count_in.md",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260928_103839_analyze_unusually_high_failed_conversion_count_in_q_analyze_unusually_high_failed_conversion_count_in_bot_statistics",
+      "target": "graphify_out_memory_query_20260928_103839_analyze_unusually_high_failed_conversion_count_in_source_nodes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448",
+      "target": "graphify_out_memory_query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448_q_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448\u0435_\u043f\u0440\u043e\u0434\u0432\u0438\u0433\u0430\u0442\u044c_\u0431\u043e\u0442_\u0441_\u0443\u0447\u0435\u0442\u043e\u043c_\u0442\u0435\u043a\u0443\u0449\u0435\u0439_\u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0438",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448.md",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448_q_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448\u0435_\u043f\u0440\u043e\u0434\u0432\u0438\u0433\u0430\u0442\u044c_\u0431\u043e\u0442_\u0441_\u0443\u0447\u0435\u0442\u043e\u043c_\u0442\u0435\u043a\u0443\u0449\u0435\u0439_\u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0438",
+      "target": "graphify_out_memory_query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448_answer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448.md",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448_q_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448\u0435_\u043f\u0440\u043e\u0434\u0432\u0438\u0433\u0430\u0442\u044c_\u0431\u043e\u0442_\u0441_\u0443\u0447\u0435\u0442\u043e\u043c_\u0442\u0435\u043a\u0443\u0449\u0435\u0439_\u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0438",
+      "target": "graphify_out_memory_query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448_outcome",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "graphify-out/memory/query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448.md",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "graphify_out_memory_query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448_q_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448\u0435_\u043f\u0440\u043e\u0434\u0432\u0438\u0433\u0430\u0442\u044c_\u0431\u043e\u0442_\u0441_\u0443\u0447\u0435\u0442\u043e\u043c_\u0442\u0435\u043a\u0443\u0449\u0435\u0439_\u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0438",
+      "target": "graphify_out_memory_query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448_source_nodes",
+      "confidence_score": 1.0
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "38adea4dc1cdfb0ee2ab1000d329212604c955d9"
+  "built_at_commit": "6683ae7f95cdc0136d605e993740fb15946e2f23"
 }

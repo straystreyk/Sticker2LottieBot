@@ -1,0 +1,307 @@
+{
+  "package.json": {
+    "mtime": 1790462295.462339,
+    "ast_hash": "75d43a5a27f3e2cb67d74717f7b3907e",
+    "semantic_hash": ""
+  },
+  "src/admin.ts": {
+    "mtime": 1790460148.638117,
+    "ast_hash": "9d6074bffdf07275b8c9b80233d5973e",
+    "semantic_hash": ""
+  },
+  "src/bot.ts": {
+    "mtime": 1790539794.0489142,
+    "ast_hash": "1d0ff251ab7056d817d61fd52dabd225",
+    "semantic_hash": ""
+  },
+  "src/cbq/autoFixCBQ.ts": {
+    "mtime": 1790539900.4326875,
+    "ast_hash": "852142ac1e795203a2d3e239df7e494b",
+    "semantic_hash": ""
+  },
+  "src/cbq/downloadPackCBQ.ts": {
+    "mtime": 1790460820.0203776,
+    "ast_hash": "cdcb8b522f1eaefbe91d59504d0ea272",
+    "semantic_hash": ""
+  },
+  "src/cbq/formatCBQ.ts": {
+    "mtime": 1790460883.9220052,
+    "ast_hash": "702767e29ed2a258903b285bea0276e5",
+    "semantic_hash": ""
+  },
+  "src/cbq/modeCBQ.ts": {
+    "mtime": 1790461313.0673642,
+    "ast_hash": "05426541f9468983e6f0c1c313cac53a",
+    "semantic_hash": ""
+  },
+  "src/cbq/onboardingCBQ.ts": {
+    "mtime": 1790461425.2163928,
+    "ast_hash": "c0f251db3aeddcc5044cf788d4610950",
+    "semantic_hash": ""
+  },
+  "src/cbq/settingsCBQ.ts": {
+    "mtime": 1790460819.9396145,
+    "ast_hash": "b32605bed85325de81417d8915fff702",
+    "semantic_hash": ""
+  },
+  "src/cbq/stickerPackCBQ.ts": {
+    "mtime": 1790539983.4649448,
+    "ast_hash": "e31afb6a87453b8f61df165c9b01e1a6",
+    "semantic_hash": ""
+  },
+  "src/cbq/usersCBQ.ts": {
+    "mtime": 1790460148.6394026,
+    "ast_hash": "baa27313a5a5b0f47c8f827124438c76",
+    "semantic_hash": ""
+  },
+  "src/commands/broadcast.ts": {
+    "mtime": 1790460148.6399834,
+    "ast_hash": "0a9f99c5710e2e93c45802d47fba8a7f",
+    "semantic_hash": ""
+  },
+  "src/commands/convert.ts": {
+    "mtime": 1790460763.0519867,
+    "ast_hash": "13b8b7801adc3b6170a1f62b03aea67c",
+    "semantic_hash": ""
+  },
+  "src/commands/downloadPack.ts": {
+    "mtime": 1790460763.1304154,
+    "ast_hash": "29d09f9185baf769dda65098f27910d8",
+    "semantic_hash": ""
+  },
+  "src/commands/help.ts": {
+    "mtime": 1790539865.6777923,
+    "ast_hash": "2f9cb8fdc1be635da6f693be14b368ce",
+    "semantic_hash": ""
+  },
+  "src/commands/settings.ts": {
+    "mtime": 1790460762.9736485,
+    "ast_hash": "8e903f7f9eb0c502bc30b16ee316bbd9",
+    "semantic_hash": ""
+  },
+  "src/commands/start.ts": {
+    "mtime": 1790539900.3967888,
+    "ast_hash": "4a6223a48f62efa19f6880c8f85836ac",
+    "semantic_hash": ""
+  },
+  "src/commands/stats.ts": {
+    "mtime": 1790539879.5681293,
+    "ast_hash": "c54050ae26d4367c912dc9fac60772b8",
+    "semantic_hash": ""
+  },
+  "src/commands/users.ts": {
+    "mtime": 1790460148.6429746,
+    "ast_hash": "f22670c08232487a4f5c2e64ce86ad57",
+    "semantic_hash": ""
+  },
+  "src/config.ts": {
+    "mtime": 1790461731.6052766,
+    "ast_hash": "eadc92e22f6604fa36bf98c46dc89151",
+    "semantic_hash": ""
+  },
+  "src/db/database.ts": {
+    "mtime": 1790539900.2806807,
+    "ast_hash": "444591f14db7b42f57a3e4d00e91e46a",
+    "semantic_hash": ""
+  },
+  "src/handlers/documentHandler.ts": {
+    "mtime": 1790539900.3800836,
+    "ast_hash": "9b917e7c68c0c52dee5f2e93f6cb8f09",
+    "semantic_hash": ""
+  },
+  "src/handlers/stickerHandler.ts": {
+    "mtime": 1790539900.3845143,
+    "ast_hash": "3afcbd0ca8036e00b3558f8b684dbd58",
+    "semantic_hash": ""
+  },
+  "src/handlers/textHandler.ts": {
+    "mtime": 1790539900.3912323,
+    "ast_hash": "3050a093b736520af0c190e0f00d0cfd",
+    "semantic_hash": ""
+  },
+  "src/i18n.ts": {
+    "mtime": 1790460720.8127553,
+    "ast_hash": "700482f79b7e9217951d6acad20985f5",
+    "semantic_hash": ""
+  },
+  "src/index.ts": {
+    "mtime": 1790539843.8511353,
+    "ast_hash": "f93e694e7ba947c21d05803629782715",
+    "semantic_hash": ""
+  },
+  "src/logic/downloadStickerSet.ts": {
+    "mtime": 1790539983.4823048,
+    "ast_hash": "c7c05053064913c099b6099c767c9fae",
+    "semantic_hash": ""
+  },
+  "src/logic/downloadTelegramFile.ts": {
+    "mtime": 1790461247.1472192,
+    "ast_hash": "5b0a49d7917e801a5985c4f70d10d9d9",
+    "semantic_hash": ""
+  },
+  "src/logic/lottieFileToTgsSticker.ts": {
+    "mtime": 1790539726.9417412,
+    "ast_hash": "3a4fde6b59026b80d3135593909af106",
+    "semantic_hash": ""
+  },
+  "src/logic/resultActions.ts": {
+    "mtime": 1790539900.4025748,
+    "ast_hash": "e8bbba84a3b13aca8df39b106a7c5609",
+    "semantic_hash": ""
+  },
+  "src/logic/sendDonationPrompt.ts": {
+    "mtime": 1790538721.2750318,
+    "ast_hash": "5a299376b7c264738c36b1e1522be46e",
+    "semantic_hash": ""
+  },
+  "src/logic/stickerToFile.ts": {
+    "mtime": 1790539726.8573983,
+    "ast_hash": "a542e1d5279e90d58ae377b80d85fc27",
+    "semantic_hash": ""
+  },
+  "src/logic/svgFileToTgsSticker.ts": {
+    "mtime": 1790539727.027324,
+    "ast_hash": "0bad460d9bae94a7f031b8b4e47edd5c",
+    "semantic_hash": ""
+  },
+  "src/scripts/convertSvgFile.ts": {
+    "mtime": 1790460148.6462884,
+    "ast_hash": "d8f0bbd2a0a2522c5b7a5745f1430e19",
+    "semantic_hash": ""
+  },
+  "src/store/autoFixStore.ts": {
+    "mtime": 1790539677.0396454,
+    "ast_hash": "c087383d8c6cf022d2bfdc124b6bb7f8",
+    "semantic_hash": ""
+  },
+  "src/store/convertTypesStore.ts": {
+    "mtime": 1790460721.070114,
+    "ast_hash": "065c6125fe382b6b8cfe662e16a8b9be",
+    "semantic_hash": ""
+  },
+  "src/store/downloadPackStore.ts": {
+    "mtime": 1790460721.1564305,
+    "ast_hash": "d0449d2ba675a4e6163f331657b06d74",
+    "semantic_hash": ""
+  },
+  "src/store/resultStore.ts": {
+    "mtime": 1790460720.8984723,
+    "ast_hash": "51be36b15f19df650f4751021e3f2f10",
+    "semantic_hash": ""
+  },
+  "tsconfig.json": {
+    "mtime": 1790460148.6469812,
+    "ast_hash": "09549392e0c846f149af1f548007d762",
+    "semantic_hash": ""
+  },
+  ".agents/skills/graphify/SKILL.md": {
+    "mtime": 1790460148.6253996,
+    "ast_hash": "960d770f159b5917d87dc28b8a75536a",
+    "semantic_hash": ""
+  },
+  "AGENTS.md": {
+    "mtime": 1790460148.6266582,
+    "ast_hash": "62c05a2bf20bf036a0b2633478663e64",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1790539865.7660387,
+    "ast_hash": "0d2b951dac1fc758c0deb813bfa9617f",
+    "semantic_hash": ""
+  },
+  "docker-compose.yml": {
+    "mtime": 1790460148.6277287,
+    "ast_hash": "480a8da539611de5d7da5e13efa0b5b8",
+    "semantic_hash": ""
+  },
+  "src/logger.ts": {
+    "mtime": 1790461938.750475,
+    "ast_hash": "e3c1ec6260a3d257d2e5c5625268a8dc",
+    "semantic_hash": ""
+  },
+  "src/cbq/starsSupportCBQ.ts": {
+    "mtime": 1790538721.2805603,
+    "ast_hash": "59fed8c3e9580797f3d2a7c3817575b5",
+    "semantic_hash": ""
+  },
+  "src/commands/paySupport.ts": {
+    "mtime": 1790538679.2837355,
+    "ast_hash": "db3be35588b48d056d6b082b3c994ed0",
+    "semantic_hash": ""
+  },
+  "src/handlers/starsPaymentHandler.ts": {
+    "mtime": 1790538721.2882614,
+    "ast_hash": "bf34eae2cd7c86e850096f34f363600b",
+    "semantic_hash": ""
+  },
+  "src/logic/starsSupport.ts": {
+    "mtime": 1790538721.2667637,
+    "ast_hash": "0893183d9406c7895759d82448831f08",
+    "semantic_hash": ""
+  },
+  "src/cbq/doctorCBQ.ts": {
+    "mtime": 1790539900.3568704,
+    "ast_hash": "04411421d072de05840f0c2fdbdbc0c2",
+    "semantic_hash": ""
+  },
+  "src/cbq/stickerPackBuilderCBQ.ts": {
+    "mtime": 1790539900.342118,
+    "ast_hash": "1fd450be1e7160aa80905f34bcbf112b",
+    "semantic_hash": ""
+  },
+  "src/cbq/studioCBQ.ts": {
+    "mtime": 1790539900.321822,
+    "ast_hash": "e42bc683863cd26955387c369dc6d493",
+    "semantic_hash": ""
+  },
+  "src/commands/doctor.ts": {
+    "mtime": 1790539677.1241615,
+    "ast_hash": "1dd01d0471845d9ff7eb03d513e62a89",
+    "semantic_hash": ""
+  },
+  "src/commands/stickerPackBuilder.ts": {
+    "mtime": 1790539959.2673557,
+    "ast_hash": "2a1d50caa7ea5d1b8c847314fbcb3e8a",
+    "semantic_hash": ""
+  },
+  "src/commands/studio.ts": {
+    "mtime": 1790539959.1797879,
+    "ast_hash": "05c68d122113a7572c7f8c367317ece6",
+    "semantic_hash": ""
+  },
+  "src/handlers/inlineQueryHandler.ts": {
+    "mtime": 1790539843.7639818,
+    "ast_hash": "104a9a9b02c13fe9dcd03e4404b5d5f7",
+    "semantic_hash": ""
+  },
+  "src/logic/conversionHistory.ts": {
+    "mtime": 1790539468.7072208,
+    "ast_hash": "c8f22152a5335bbdf442ee75383131cb",
+    "semantic_hash": ""
+  },
+  "src/logic/publishStickerPack.ts": {
+    "mtime": 1790539900.3496726,
+    "ast_hash": "69c0bf85d9fd60b19d766397410b3def",
+    "semantic_hash": ""
+  },
+  "src/logic/stickerDoctor.ts": {
+    "mtime": 1790539900.372251,
+    "ast_hash": "a7a0cdba2b0db8dea25fed6183d98c40",
+    "semantic_hash": ""
+  },
+  "src/store/doctorStore.ts": {
+    "mtime": 1790539468.7938752,
+    "ast_hash": "258613f4bc598715968d48df834505c9",
+    "semantic_hash": ""
+  },
+  "src/store/stickerPackBuilderStore.ts": {
+    "mtime": 1790539468.8775325,
+    "ast_hash": "007ede53bc1ed7cbca9f16955515737d",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260927_200021_\u043a\u0430\u043a\u0438\u0435_\u043d\u043e\u0432\u044b\u0435_\u043f\u0440\u043e\u0434\u0443\u043a\u0442\u043e\u0432\u044b\u0435_\u0444\u0443\u043d\u043a\u0446\u0438\u0438_\u043b\u0443\u0447\u0448\u0435_\u0432\u0441\u0435\u0433\u043e_\u043f\u043e\u0432\u044b\u0441\u044f.md": {
+    "mtime": 1790539221.4407527,
+    "ast_hash": "ce91ff4fcb99629b14515f07c86ef435",
+    "semantic_hash": ""
+  }
+}

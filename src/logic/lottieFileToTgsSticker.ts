@@ -319,6 +319,62 @@ export async function lottieFileToTgsSticker(ctx: Context, fileId: string) {
     }
 }
 
+function scaleTranslateValues(values: number[], scale: number, offsetX: number, offsetY: number) {
+    return [
+        (values[0] ?? 0) * scale + offsetX,
+        (values[1] ?? 0) * scale + offsetY,
+        ...values.slice(2),
+    ];
+}
+
+function scaleValues(values: number[], scale: number) {
+    return [
+        (values[0] ?? 0) * scale,
+        (values[1] ?? 0) * scale,
+        ...values.slice(2),
+    ];
+}
+
+function isSplitDimensionProperty(property: any) {
+    return (
+        !!property &&
+        typeof property.k === "object" &&
+        property.k !== null &&
+        !Array.isArray(property.k)
+    );
+}
+
+function scaleSplitDimensionComponent(property: any, axis: "x" | "y", transform: (v: number) => number) {
+    if (!property || typeof property !== "object") return;
+    const component = property.k?.[axis];
+    if (!component || typeof component !== "object") return;
+
+    if (typeof component.k === "number") {
+        component.k = transform(component.k);
+        return;
+    }
+    if (Array.isArray(component.k)) {
+        for (const keyframe of component.k) {
+            if (!keyframe || typeof keyframe !== "object") continue;
+            if (Array.isArray(keyframe.s)) keyframe.s = [transform(keyframe.s[0] ?? 0)];
+            if (Array.isArray(keyframe.e)) keyframe.e = [transform(keyframe.e[0] ?? 0)];
+        }
+    }
+}
+
+function scaleSpatialTangents(property: any, scale: number) {
+    if (!property || !Array.isArray(property.k)) return;
+    for (const keyframe of property.k) {
+        if (!keyframe || typeof keyframe !== "object") continue;
+        for (const tangentKey of ["to", "ti"] as const) {
+            const tangent = keyframe[tangentKey];
+            if (Array.isArray(tangent) && tangent.every((x: unknown) => typeof x === "number")) {
+                keyframe[tangentKey] = tangent.map((x: number) => x * scale);
+            }
+        }
+    }
+}
+
 function transformVectorProperty(
     property: any,
     transform: (value: number[], kind: "start" | "end") => number[],
@@ -356,24 +412,43 @@ export function autoFixLottieJson(jsonText: string) {
     const width = typeof json.w === "number" && json.w > 0 ? json.w : 512;
     const height = typeof json.h === "number" && json.h > 0 ? json.h : 512;
     if (width !== 512 || height !== 512) {
-        const scaleX = 512 / width;
-        const scaleY = 512 / height;
+        // Proportional fit: one uniform scale factor (longest side → 512),
+        // then center the content on the 512x512 canvas. Rotation, anchor
+        // points and child layers keep working because the scale is applied
+        // once, at the top of every parent chain.
+        const scale = 512 / Math.max(width, height);
+        const offsetX = (512 - width * scale) / 2;
+        const offsetY = (512 - height * scale) / 2;
+
         for (const layer of Array.isArray(json.layers) ? json.layers : []) {
-            if (layer?.parent != null) continue;
-            transformVectorProperty(layer?.ks?.p, (values) => [
-                (values[0] ?? 0) * scaleX,
-                (values[1] ?? 0) * scaleY,
-                ...values.slice(2),
-            ]);
-            transformVectorProperty(layer?.ks?.s, (values) => [
-                (values[0] ?? 100) * scaleX,
-                (values[1] ?? 100) * scaleY,
-                ...values.slice(2),
-            ]);
+            if (layer?.parent != null) continue; // children inherit the scaled parent space
+            const ks = layer?.ks ?? (layer.ks = {});
+
+            // Position: scale + centering offset (static, keyframed or split-dimension).
+            if (isSplitDimensionProperty(ks.p)) {
+                scaleSplitDimensionComponent(ks.p, "x", (v) => v * scale + offsetX);
+                scaleSplitDimensionComponent(ks.p, "y", (v) => v * scale + offsetY);
+            } else if (ks.p && Array.isArray(ks.p.k)) {
+                transformVectorProperty(ks.p, (values) => scaleTranslateValues(values, scale, offsetX, offsetY));
+                scaleSpatialTangents(ks.p, scale);
+            } else if (offsetX !== 0 || offsetY !== 0) {
+                ks.p = { a: 0, k: [offsetX, offsetY, 0] };
+            }
+
+            // Scale: multiply percentages; when absent (default 100%) it must be added,
+            // otherwise rig null layers would leave the content unscaled.
+            if (isSplitDimensionProperty(ks.s)) {
+                scaleSplitDimensionComponent(ks.s, "x", (v) => v * scale);
+                scaleSplitDimensionComponent(ks.s, "y", (v) => v * scale);
+            } else if (ks.s && Array.isArray(ks.s.k)) {
+                transformVectorProperty(ks.s, (values) => scaleValues(values, scale));
+            } else {
+                ks.s = { a: 0, k: [100 * scale, 100 * scale, 100] };
+            }
         }
         json.w = 512;
         json.h = 512;
-        changes.push(`canvas ${width}x${height} → 512x512`);
+        changes.push(`canvas ${width}x${height} → 512x512 (proportional fit)`);
     }
 
     if (typeof json.fr === "number" && json.fr > 60) {
