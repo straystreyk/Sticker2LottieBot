@@ -1,15 +1,15 @@
 {
   "0": "database.ts",
   "1": "Q: Analyze unusually high failed conversion count in bot statistics",
-  "2": "stickerToFile.ts",
+  "2": "downloadStickerSet.ts",
   "3": "index.ts",
   "4": "starsPaymentHandler.ts",
-  "5": "textHandler.ts",
+  "5": "Q: Как исправить неравномерное движение заливки пальца при конвертации Jitter Lottie в Telegram TGS?",
   "6": "users.ts",
   "7": "Q: Какие новые продуктовые функции лучше всего повысят конверсию, вовлечённость и удержание Sticker2LottieBot?",
   "8": "svgFileToTgsSticker.ts",
-  "9": "broadcast.ts",
-  "10": "stats.ts",
+  "9": "tgsDocument.test.mjs",
+  "10": "lottieAutoFix.ts",
   "11": "Q: Какие фичи добавить в Sticker2LottieBot и как лучше продвигать бот с учетом текущей статистики?",
   "12": "logProductEvent",
   "13": "package.json",
@@ -18,5 +18,10 @@
   "16": "compilerOptions",
   "17": "convertSvgFile.ts",
   "18": "AGENTS.md",
-  "19": "Q: Как Моя студия хранит стикеры: файлами на сервере или ссылками Telegram?"
+  "19": "Q: Как Моя студия хранит стикеры: файлами на сервере или ссылками Telegram?",
+  "20": "broadcast.ts",
+  "21": "lottieAutoFix.test.mjs",
+  "22": "doctor.ts",
+  "23": "stats.ts",
+  "24": "svgColors.test.mjs"
 }

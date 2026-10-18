@@ -1,7 +1,7 @@
 {
   "package.json": {
-    "mtime": 1790462295.462339,
-    "ast_hash": "75d43a5a27f3e2cb67d74717f7b3907e",
+    "mtime": 1792307658.445201,
+    "ast_hash": "adf2eb70ee8f66a469f20bd53b4b0967",
     "semantic_hash": ""
   },
   "src/admin.ts": {
@@ -140,8 +140,8 @@
     "semantic_hash": ""
   },
   "src/logic/lottieFileToTgsSticker.ts": {
-    "mtime": 1790539726.9417412,
-    "ast_hash": "3a4fde6b59026b80d3135593909af106",
+    "mtime": 1792310518.8824794,
+    "ast_hash": "a41d3ba84f7e2e78c4d5bcfc4928aafd",
     "semantic_hash": ""
   },
   "src/logic/resultActions.ts": {
@@ -160,8 +160,8 @@
     "semantic_hash": ""
   },
   "src/logic/svgFileToTgsSticker.ts": {
-    "mtime": 1790539727.027324,
-    "ast_hash": "0bad460d9bae94a7f031b8b4e47edd5c",
+    "mtime": 1792309957.404081,
+    "ast_hash": "fcf2d1412397669fefb41a796b3c4ada",
     "semantic_hash": ""
   },
   "src/scripts/convertSvgFile.ts": {
@@ -302,6 +302,41 @@
   "graphify-out/memory/query_20260927_200021_\u043a\u0430\u043a\u0438\u0435_\u043d\u043e\u0432\u044b\u0435_\u043f\u0440\u043e\u0434\u0443\u043a\u0442\u043e\u0432\u044b\u0435_\u0444\u0443\u043d\u043a\u0446\u0438\u0438_\u043b\u0443\u0447\u0448\u0435_\u0432\u0441\u0435\u0433\u043e_\u043f\u043e\u0432\u044b\u0441\u044f.md": {
     "mtime": 1790539221.4407527,
     "ast_hash": "ce91ff4fcb99629b14515f07c86ef435",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260928_045530_\u043a\u0430\u043a_\u043c\u043e\u044f_\u0441\u0442\u0443\u0434\u0438\u044f_\u0445\u0440\u0430\u043d\u0438\u0442_\u0441\u0442\u0438\u043a\u0435\u0440\u044b__\u0444\u0430\u0439\u043b\u0430\u043c\u0438_\u043d\u0430_\u0441\u0435\u0440\u0432\u0435\u0440\u0435.md": {
+    "mtime": 1790571330.057326,
+    "ast_hash": "d256b080f23ca6dc36c3b95e1914870b",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260928_103839_analyze_unusually_high_failed_conversion_count_in.md": {
+    "mtime": 1790591919.5471313,
+    "ast_hash": "e34ff9019447fee68ceafc1019a6ffd3",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260928_104040_\u043a\u0430\u043a\u0438\u0435_\u0444\u0438\u0447\u0438_\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c_\u0432_sticker2lottiebot_\u0438_\u043a\u0430\u043a_\u043b\u0443\u0447\u0448.md": {
+    "mtime": 1790592040.7013943,
+    "ast_hash": "e8559cee19ae46fea0d0c40214016ceb",
+    "semantic_hash": ""
+  },
+  "src/logic/lottieAutoFix.ts": {
+    "mtime": 1792310518.850427,
+    "ast_hash": "7cc111b21b3950103bf9dc3ec85b3439",
+    "semantic_hash": ""
+  },
+  "test/lottieAutoFix.test.mjs": {
+    "mtime": 1792310510.2522516,
+    "ast_hash": "18ea86b4ece917bd5e0d0a434cfa319c",
+    "semantic_hash": ""
+  },
+  "src/logic/tgsDocument.ts": {
+    "mtime": 1792310213.984204,
+    "ast_hash": "7bbd3174527c82920061207197591159",
+    "semantic_hash": ""
+  },
+  "test/tgsDocument.test.mjs": {
+    "mtime": 1792310214.0116296,
+    "ast_hash": "a0531ca3d9bba2bec5dc5667d230231d",
     "semantic_hash": ""
   }
 }

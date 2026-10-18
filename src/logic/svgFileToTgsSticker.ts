@@ -10,9 +10,13 @@ import { gzipSync } from "node:zlib";
 import { CONFIG } from "../config.js";
 import { logConversion, logProductEvent } from "../db/database.js";
 import { resultStore } from "../store/resultStore.js";
-import { sendDonationPromptSafely, sendPostConversionMessages } from "./resultActions.js";
+import {
+  sendDonationPromptSafely,
+  sendPostConversionMessages,
+} from "./resultActions.js";
 import { recordSentResult } from "./conversionHistory.js";
 import { tr } from "../i18n.js";
+import { replyWithTgsDocument } from "./tgsDocument.js";
 
 type Point = [number, number];
 
@@ -39,7 +43,9 @@ const FRAME_RATE = 30;
 const OUT_POINT = 30;
 const CIRCLE_KAPPA = 0.5522847498307936;
 const execFileAsync = promisify(execFile);
-const LOCAL_LOTTIE_CONVERT_BIN = resolve("vendor/lottie-convert/lottie_convert");
+const LOCAL_LOTTIE_CONVERT_BIN = resolve(
+  "vendor/lottie-convert/lottie_convert",
+);
 
 const namedColors: Record<string, string> = {
   black: "#000000",
@@ -61,7 +67,8 @@ function getTelegramFileUrl(filePath: string) {
 
 async function downloadAsBuffer(url: string): Promise<Buffer> {
   const res = await fetch(url);
-  if (!res.ok) throw new Error(`Download failed: ${res.status} ${res.statusText}`);
+  if (!res.ok)
+    throw new Error(`Download failed: ${res.status} ${res.statusText}`);
   return Buffer.from(await res.arrayBuffer());
 }
 
@@ -106,18 +113,87 @@ function parseStyleBlock(svg: string) {
   return classes;
 }
 
-function attrsWithClasses(attrs: Record<string, string>, classes: Record<string, Record<string, string>>) {
+const SVG_PRESENTATION_ATTRIBUTES = new Set([
+  "fill",
+  "stroke",
+  "stroke-width",
+  "opacity",
+  "fill-opacity",
+  "stroke-opacity",
+  "fill-rule",
+  "stroke-linecap",
+  "stroke-linejoin",
+  "stroke-miterlimit",
+  "stroke-dasharray",
+  "stroke-dashoffset",
+]);
+
+function escapeXmlAttribute(value: string) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("<", "&lt;");
+}
+
+/**
+ * Illustrator and similar tools commonly put colors in a <style> block and
+ * reference them through classes. The bundled converter ignores those CSS
+ * rules, so materialize the presentation attributes before invoking it.
+ */
+export function inlineSvgClassStyles(svg: string) {
+  const classes = parseStyleBlock(svg);
+  if (Object.keys(classes).length === 0) return svg;
+
+  return svg.replace(
+    /<(svg|g|use|path|rect|circle|ellipse|line|polyline|polygon)\b([^>]*?)(\/?)>/gi,
+    (tagText, tagName: string, rawAttributes: string, selfClosing: string) => {
+      const attrs = parseAttrs(rawAttributes);
+      const classNames = (attrs.class ?? "").split(/\s+/).filter(Boolean);
+      const classAttrs = classNames.reduce<Record<string, string>>(
+        (merged, className) => ({ ...merged, ...(classes[className] ?? {}) }),
+        {},
+      );
+      const additions = Object.entries(classAttrs).filter(
+        ([name]) =>
+          SVG_PRESENTATION_ATTRIBUTES.has(name) && attrs[name] == null,
+      );
+      if (additions.length === 0) return tagText;
+
+      const serialized = additions
+        .map(([name, value]) => `${name}="${escapeXmlAttribute(value)}"`)
+        .join(" ");
+      const spacer =
+        rawAttributes.length === 0 || /\s$/.test(rawAttributes) ? "" : " ";
+      return `<${tagName}${rawAttributes}${spacer}${serialized}${selfClosing ? "/" : ""}>`;
+    },
+  );
+}
+
+function attrsWithClasses(
+  attrs: Record<string, string>,
+  classes: Record<string, Record<string, string>>,
+) {
   const classAttrs = (attrs.class ?? "")
     .split(/\s+/)
     .filter(Boolean)
-    .reduce<Record<string, string>>((merged, className) => ({ ...merged, ...(classes[className] ?? {}) }), {});
+    .reduce<Record<string, string>>(
+      (merged, className) => ({ ...merged, ...(classes[className] ?? {}) }),
+      {},
+    );
 
   return { ...classAttrs, ...attrs };
 }
 
-function collectShapeDefinitions(svg: string, classes: Record<string, Record<string, string>>) {
-  const definitions: Record<string, { tag: string; attrs: Record<string, string> }> = {};
-  const shapeRe = /<\s*(path|rect|circle|ellipse|line|polyline|polygon)\b([^>]*)\/?>/gi;
+function collectShapeDefinitions(
+  svg: string,
+  classes: Record<string, Record<string, string>>,
+) {
+  const definitions: Record<
+    string,
+    { tag: string; attrs: Record<string, string> }
+  > = {};
+  const shapeRe =
+    /<\s*(path|rect|circle|ellipse|line|polyline|polygon)\b([^>]*)\/?>/gi;
   let match: RegExpExecArray | null;
 
   while ((match = shapeRe.exec(svg))) {
@@ -130,7 +206,10 @@ function collectShapeDefinitions(svg: string, classes: Record<string, Record<str
   return definitions;
 }
 
-function mergeAttrs(parent: Record<string, string>, child: Record<string, string>) {
+function mergeAttrs(
+  parent: Record<string, string>,
+  child: Record<string, string>,
+) {
   const inheritedKeys = [
     "fill",
     "stroke",
@@ -141,7 +220,11 @@ function mergeAttrs(parent: Record<string, string>, child: Record<string, string
     "display",
     "visibility",
   ];
-  const inherited = Object.fromEntries(inheritedKeys.filter((key) => parent[key] != null).map((key) => [key, parent[key]]));
+  const inherited = Object.fromEntries(
+    inheritedKeys
+      .filter((key) => parent[key] != null)
+      .map((key) => [key, parent[key]]),
+  );
   return { ...inherited, ...child };
 }
 
@@ -161,7 +244,12 @@ function parseViewport(svg: string) {
     .map((part) => Number.parseFloat(part));
 
   if (viewBox?.length === 4 && viewBox.every(Number.isFinite)) {
-    return { minX: viewBox[0], minY: viewBox[1], width: viewBox[2], height: viewBox[3] };
+    return {
+      minX: viewBox[0],
+      minY: viewBox[1],
+      width: viewBox[2],
+      height: viewBox[3],
+    };
   }
 
   return {
@@ -174,13 +262,19 @@ function parseViewport(svg: string) {
 
 function createNormalizer(svg: string) {
   const viewport = parseViewport(svg);
-  const scale = Math.min(CANVAS_SIZE / viewport.width, CANVAS_SIZE / viewport.height);
+  const scale = Math.min(
+    CANVAS_SIZE / viewport.width,
+    CANVAS_SIZE / viewport.height,
+  );
   const offsetX = (CANVAS_SIZE - viewport.width * scale) / 2;
   const offsetY = (CANVAS_SIZE - viewport.height * scale) / 2;
 
   return {
     point(x: number, y: number): Point {
-      return [(x - viewport.minX) * scale + offsetX, (y - viewport.minY) * scale + offsetY];
+      return [
+        (x - viewport.minX) * scale + offsetX,
+        (y - viewport.minY) * scale + offsetY,
+      ];
     },
     length(value: number) {
       return value * scale;
@@ -205,7 +299,10 @@ function multiplyMatrix(left: Matrix, right: Matrix): Matrix {
 }
 
 function applyMatrix(matrix: Matrix, x: number, y: number): Point {
-  return [matrix[0] * x + matrix[2] * y + matrix[4], matrix[1] * x + matrix[3] * y + matrix[5]];
+  return [
+    matrix[0] * x + matrix[2] * y + matrix[4],
+    matrix[1] * x + matrix[3] * y + matrix[5],
+  ];
 }
 
 function parseTransform(transform?: string): Matrix {
@@ -251,17 +348,23 @@ function parseTransform(transform?: string): Matrix {
 }
 
 function parseColor(input?: string): [number, number, number, number] | null {
-  if (!input) return [0, 0, 0, 1];
+  if (!input) return null;
   const color = input.trim().toLowerCase();
   const normalized = namedColors[color] ?? color;
 
-  if (normalized === "none" || normalized === "transparent" || normalized.startsWith("url(")) {
+  if (
+    normalized === "none" ||
+    normalized === "transparent" ||
+    normalized.startsWith("url(")
+  ) {
     return null;
   }
 
   const shortHex = normalized.match(/^#([0-9a-f]{3})$/i);
   if (shortHex) {
-    const [r, g, b] = shortHex[1].split("").map((part) => Number.parseInt(part + part, 16) / 255);
+    const [r, g, b] = shortHex[1]
+      .split("")
+      .map((part) => Number.parseInt(part + part, 16) / 255);
     return [r, g, b, 1];
   }
 
@@ -293,7 +396,10 @@ function parseColor(input?: string): [number, number, number, number] | null {
   return [0, 0, 0, 1];
 }
 
-function parseStyle(attrs: Record<string, string>, normalizeLength: (value: number) => number): SvgStyle {
+function parseStyle(
+  attrs: Record<string, string>,
+  normalizeLength: (value: number) => number,
+): SvgStyle {
   return {
     fill: attrs.fill ?? "#000000",
     stroke: attrs.stroke,
@@ -324,7 +430,11 @@ function addCubic(path: LottiePath, c1: Point, c2: Point, end: Point) {
 }
 
 function tokenizePath(d: string) {
-  return d.match(/[AaCcHhLlMmQqSsTtVvZz]|[-+]?(?:\d*\.\d+|\d+\.?)(?:[eE][-+]?\d+)?/g) ?? [];
+  return (
+    d.match(
+      /[AaCcHhLlMmQqSsTtVvZz]|[-+]?(?:\d*\.\d+|\d+\.?)(?:[eE][-+]?\d+)?/g,
+    ) ?? []
+  );
 }
 
 function isCommand(token: string) {
@@ -354,7 +464,9 @@ function arcToCubics(
   ry = Math.abs(ry);
 
   if (rx === 0 || ry === 0 || (x1 === x2 && y1 === y2)) {
-    return [{ c1: [x1, y1] as Point, c2: [x2, y2] as Point, end: [x2, y2] as Point }];
+    return [
+      { c1: [x1, y1] as Point, c2: [x2, y2] as Point, end: [x2, y2] as Point },
+    ];
   }
 
   const phi = (xAxisRotation * Math.PI) / 180;
@@ -420,7 +532,10 @@ function arcToCubics(
   });
 }
 
-function parsePathData(d: string, normalizePoint: (x: number, y: number) => Point) {
+function parsePathData(
+  d: string,
+  normalizePoint: (x: number, y: number) => Point,
+) {
   const tokens = tokenizePath(d);
   const paths: LottiePath[] = [];
   const warnings: string[] = [];
@@ -461,11 +576,22 @@ function parsePathData(d: string, normalizePoint: (x: number, y: number) => Poin
 
     if (type === "M") {
       if (!hasNumber()) continue;
-      moveTo((relative ? x : 0) + readNumber(), (relative ? y : 0) + readNumber());
-      while (hasNumber()) lineTo((relative ? x : 0) + readNumber(), (relative ? y : 0) + readNumber());
+      moveTo(
+        (relative ? x : 0) + readNumber(),
+        (relative ? y : 0) + readNumber(),
+      );
+      while (hasNumber())
+        lineTo(
+          (relative ? x : 0) + readNumber(),
+          (relative ? y : 0) + readNumber(),
+        );
       command = relative ? "l" : "L";
     } else if (type === "L") {
-      while (hasNumber()) lineTo((relative ? x : 0) + readNumber(), (relative ? y : 0) + readNumber());
+      while (hasNumber())
+        lineTo(
+          (relative ? x : 0) + readNumber(),
+          (relative ? y : 0) + readNumber(),
+        );
       lastCubicControl = null;
       lastQuadraticControl = null;
     } else if (type === "H") {
@@ -484,7 +610,12 @@ function parsePathData(d: string, normalizePoint: (x: number, y: number) => Poin
         const c2y = (relative ? y : 0) + readNumber();
         const endX = (relative ? x : 0) + readNumber();
         const endY = (relative ? y : 0) + readNumber();
-        addCubic(current, normalizePoint(c1x, c1y), normalizePoint(c2x, c2y), normalizePoint(endX, endY));
+        addCubic(
+          current,
+          normalizePoint(c1x, c1y),
+          normalizePoint(c2x, c2y),
+          normalizePoint(endX, endY),
+        );
         x = endX;
         y = endY;
         lastCubicControl = [c2x, c2y];
@@ -498,7 +629,12 @@ function parsePathData(d: string, normalizePoint: (x: number, y: number) => Poin
         const c2y = (relative ? y : 0) + readNumber();
         const endX = (relative ? x : 0) + readNumber();
         const endY = (relative ? y : 0) + readNumber();
-        addCubic(current, normalizePoint(c1x, c1y), normalizePoint(c2x, c2y), normalizePoint(endX, endY));
+        addCubic(
+          current,
+          normalizePoint(c1x, c1y),
+          normalizePoint(c2x, c2y),
+          normalizePoint(endX, endY),
+        );
         x = endX;
         y = endY;
         lastCubicControl = [c2x, c2y];
@@ -518,8 +654,16 @@ function parsePathData(d: string, normalizePoint: (x: number, y: number) => Poin
         const endX = (relative ? x : 0) + readNumber();
         const endY = (relative ? y : 0) + readNumber();
         const c1: Point = [x + (2 / 3) * (qx - x), y + (2 / 3) * (qy - y)];
-        const c2: Point = [endX + (2 / 3) * (qx - endX), endY + (2 / 3) * (qy - endY)];
-        addCubic(current, normalizePoint(c1[0], c1[1]), normalizePoint(c2[0], c2[1]), normalizePoint(endX, endY));
+        const c2: Point = [
+          endX + (2 / 3) * (qx - endX),
+          endY + (2 / 3) * (qy - endY),
+        ];
+        addCubic(
+          current,
+          normalizePoint(c1[0], c1[1]),
+          normalizePoint(c2[0], c2[1]),
+          normalizePoint(endX, endY),
+        );
         x = endX;
         y = endY;
         lastQuadraticControl = [qx, qy];
@@ -540,7 +684,17 @@ function parsePathData(d: string, normalizePoint: (x: number, y: number) => Poin
         const sweepFlag = readNumber();
         const endX = (relative ? x : 0) + readNumber();
         const endY = (relative ? y : 0) + readNumber();
-        for (const segment of arcToCubics(x, y, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, endX, endY)) {
+        for (const segment of arcToCubics(
+          x,
+          y,
+          rx,
+          ry,
+          xAxisRotation,
+          largeArcFlag,
+          sweepFlag,
+          endX,
+          endY,
+        )) {
           addCubic(
             current,
             normalizePoint(segment.c1[0], segment.c1[1]),
@@ -563,7 +717,13 @@ function parsePathData(d: string, normalizePoint: (x: number, y: number) => Poin
   return { paths, warnings };
 }
 
-function rectPath(x: number, y: number, width: number, height: number, normalizePoint: (x: number, y: number) => Point): LottiePath {
+function rectPath(
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  normalizePoint: (x: number, y: number) => Point,
+): LottiePath {
   const path = createEmptyPath(true);
   addLine(path, normalizePoint(x, y));
   addLine(path, normalizePoint(x + width, y));
@@ -572,7 +732,13 @@ function rectPath(x: number, y: number, width: number, height: number, normalize
   return path;
 }
 
-function ellipsePath(cx: number, cy: number, rx: number, ry: number, normalizePoint: (x: number, y: number) => Point): LottiePath {
+function ellipsePath(
+  cx: number,
+  cy: number,
+  rx: number,
+  ry: number,
+  normalizePoint: (x: number, y: number) => Point,
+): LottiePath {
   const path = createEmptyPath(true);
   addLine(path, normalizePoint(cx, cy - ry));
   addCubic(
@@ -602,7 +768,11 @@ function ellipsePath(cx: number, cy: number, rx: number, ry: number, normalizePo
   return path;
 }
 
-function pointsPath(points: string, closed: boolean, normalizePoint: (x: number, y: number) => Point): LottiePath | null {
+function pointsPath(
+  points: string,
+  closed: boolean,
+  normalizePoint: (x: number, y: number) => Point,
+): LottiePath | null {
   const values = points
     .trim()
     .split(/[\s,]+/)
@@ -688,10 +858,13 @@ export function svgToLottie(svg: string) {
   const warnings: string[] = [];
   const classes = parseStyleBlock(svg);
   const definitions = collectShapeDefinitions(svg, classes);
-  const stack: Array<{ attrs: Record<string, string>; matrix: Matrix; hidden: boolean }> = [
-    { attrs: {}, matrix: identityMatrix(), hidden: false },
-  ];
-  const tagRe = /<\s*(\/?)(svg|defs|g|use|path|rect|circle|ellipse|line|polyline|polygon)\b([^>]*?)(\/?)>/gi;
+  const stack: Array<{
+    attrs: Record<string, string>;
+    matrix: Matrix;
+    hidden: boolean;
+  }> = [{ attrs: {}, matrix: identityMatrix(), hidden: false }];
+  const tagRe =
+    /<\s*(\/?)(svg|defs|g|use|path|rect|circle|ellipse|line|polyline|polygon)\b([^>]*?)(\/?)>/gi;
   let match: RegExpExecArray | null;
 
   while ((match = tagRe.exec(svg))) {
@@ -701,7 +874,10 @@ export function svgToLottie(svg: string) {
     const selfClosing = match[4] === "/" || /\/\s*$/.test(match[0]);
     const parent = stack[stack.length - 1];
     let attrs = mergeAttrs(parent.attrs, rawAttrs);
-    let matrix = multiplyMatrix(parent.matrix, parseTransform(rawAttrs.transform));
+    let matrix = multiplyMatrix(
+      parent.matrix,
+      parseTransform(rawAttrs.transform),
+    );
     let hidden =
       parent.hidden ||
       attrs.display === "none" ||
@@ -709,12 +885,14 @@ export function svgToLottie(svg: string) {
       numberAttr(attrs, "opacity", 1) <= 0;
 
     if (closing) {
-      if ((tag === "g" || tag === "svg" || tag === "defs") && stack.length > 1) stack.pop();
+      if ((tag === "g" || tag === "svg" || tag === "defs") && stack.length > 1)
+        stack.pop();
       continue;
     }
 
     if (tag === "g" || tag === "svg" || tag === "defs") {
-      if (!selfClosing) stack.push({ attrs, matrix, hidden: hidden || tag === "defs" });
+      if (!selfClosing)
+        stack.push({ attrs, matrix, hidden: hidden || tag === "defs" });
       continue;
     }
 
@@ -730,7 +908,14 @@ export function svgToLottie(svg: string) {
 
       tag = definition.tag;
       attrs = mergeAttrs(attrs, definition.attrs);
-      matrix = multiplyMatrix(matrix, [1, 0, 0, 1, numberAttr(rawAttrs, "x"), numberAttr(rawAttrs, "y")]);
+      matrix = multiplyMatrix(matrix, [
+        1,
+        0,
+        0,
+        1,
+        numberAttr(rawAttrs, "x"),
+        numberAttr(rawAttrs, "y"),
+      ]);
       hidden =
         parent.hidden ||
         attrs.display === "none" ||
@@ -763,10 +948,19 @@ export function svgToLottie(svg: string) {
           point,
         ),
       );
-      if (attrs.rx || attrs.ry) warnings.push("rounded rect corners are imported as square corners");
+      if (attrs.rx || attrs.ry)
+        warnings.push("rounded rect corners are imported as square corners");
     } else if (tag === "circle") {
       const radius = numberAttr(attrs, "r");
-      paths.push(ellipsePath(numberAttr(attrs, "cx"), numberAttr(attrs, "cy"), radius, radius, point));
+      paths.push(
+        ellipsePath(
+          numberAttr(attrs, "cx"),
+          numberAttr(attrs, "cy"),
+          radius,
+          radius,
+          point,
+        ),
+      );
     } else if (tag === "ellipse") {
       paths.push(
         ellipsePath(
@@ -795,7 +989,11 @@ export function svgToLottie(svg: string) {
     }
 
     for (const [index, path] of paths.entries()) {
-      const group = groupForPath(path, style, `${tag} ${groups.length + index + 1}`);
+      const group = groupForPath(
+        path,
+        style,
+        `${tag} ${groups.length + index + 1}`,
+      );
       if (group) groups.push(group);
     }
   }
@@ -842,11 +1040,17 @@ export function svgToLottie(svg: string) {
   return { lottie, warnings };
 }
 
-function buildCaption(shapeCount: number, tgsBytes: number, warnings: string[]) {
+function buildCaption(
+  shapeCount: number,
+  tgsBytes: number,
+  warnings: string[],
+) {
   const lines = [
     "🧩 Here is your .tgs file",
     `📊 512x512, ${FRAME_RATE}fps, 1.00s, shapes: ${shapeCount}, tgs: ${(tgsBytes / 1024).toFixed(1)}KB`,
-    warnings.length ? `⚠️ ${Array.from(new Set(warnings)).slice(0, 4).join(", ")}` : null,
+    warnings.length
+      ? `⚠️ ${Array.from(new Set(warnings)).slice(0, 4).join(", ")}`
+      : null,
   ].filter(Boolean);
 
   const caption = lines.join("\n");
@@ -880,7 +1084,10 @@ async function findOnPath(command: string) {
 }
 
 async function resolveLottieConvertBin() {
-  if (process.env.LOTTIE_CONVERT_BIN && (await fileExists(process.env.LOTTIE_CONVERT_BIN))) {
+  if (
+    process.env.LOTTIE_CONVERT_BIN &&
+    (await fileExists(process.env.LOTTIE_CONVERT_BIN))
+  ) {
     return process.env.LOTTIE_CONVERT_BIN;
   }
 
@@ -902,7 +1109,7 @@ async function convertSvgWithBinary(svg: Buffer) {
   const outputPath = join(dir, "output.tgs");
 
   try {
-    await writeFile(inputPath, svg);
+    await writeFile(inputPath, inlineSvgClassStyles(svg.toString("utf-8")));
     await execFileAsync(
       lottieConvertBin,
       [
@@ -927,31 +1134,21 @@ async function convertSvgWithBinary(svg: Buffer) {
   }
 }
 
-async function replyWithTgsDocument(ctx: Context, tgs: Buffer, caption: string) {
-  const dir = await mkdtemp(join(tmpdir(), "sticker2lottie-svg-"));
-  const filePath = join(dir, "sticker.tgs");
-
-  try {
-    await writeFile(filePath, tgs);
-    return await ctx.replyWithDocument(new InputFile(filePath), {
-      caption,
-      disable_content_type_detection: true,
-    });
-  } finally {
-    await rm(dir, { recursive: true, force: true });
-  }
-}
-
 export async function svgFileToTgsSticker(ctx: Context, fileId: string) {
   const userId = ctx.from?.id;
   if (!userId) throw new Error("No userId passed.");
 
   try {
-    logProductEvent(userId, "conversion_started", { source_type: "svg", target_type: "tgs" });
+    logProductEvent(userId, "conversion_started", {
+      source_type: "svg",
+      target_type: "tgs",
+    });
     const file = await ctx.api.getFile(fileId);
     if (!file.file_path) throw new Error("Telegram file_path is empty.");
 
-    const svgBuffer = await downloadAsBuffer(getTelegramFileUrl(file.file_path));
+    const svgBuffer = await downloadAsBuffer(
+      getTelegramFileUrl(file.file_path),
+    );
     let tgs: Buffer;
     let caption: string;
     let conversionWarning: string | undefined;
@@ -960,16 +1157,27 @@ export async function svgFileToTgsSticker(ctx: Context, fileId: string) {
       tgs = await convertSvgWithBinary(svgBuffer);
       caption = buildBinaryCaption(tgs.byteLength);
     } catch (binaryError) {
-      conversionWarning = binaryError instanceof Error ? binaryError.message : "primary SVG converter failed";
+      conversionWarning =
+        binaryError instanceof Error
+          ? binaryError.message
+          : "primary SVG converter failed";
       const svg = svgBuffer.toString("utf-8");
       const { lottie, warnings } = svgToLottie(svg);
       const jsonText = JSON.stringify(lottie);
       tgs = gzipSync(Buffer.from(jsonText, "utf-8"), { level: 9 });
       const shapeCount = lottie.layers[0].shapes.length;
-      caption = buildCaption(shapeCount, tgs.byteLength, [`primary SVG converter unavailable; used fallback`, ...warnings]);
+      caption = buildCaption(shapeCount, tgs.byteLength, [
+        `primary SVG converter unavailable; used fallback`,
+        ...warnings,
+      ]);
     }
 
-    const sizeWarnings = tgs.byteLength > 64 * 1024 ? [`compressed size ${(tgs.byteLength / 1024).toFixed(1)}KB; Telegram limit is 64KB`] : [];
+    const sizeWarnings =
+      tgs.byteLength > 64 * 1024
+        ? [
+            `compressed size ${(tgs.byteLength / 1024).toFixed(1)}KB; Telegram limit is 64KB`,
+          ]
+        : [];
     if (sizeWarnings.length) {
       caption = [caption, `⚠️ ${sizeWarnings.join(", ")}`].join("\n");
     }
@@ -996,7 +1204,9 @@ export async function svgFileToTgsSticker(ctx: Context, fileId: string) {
         targetType: "tgs",
         success: false,
         outcome: "completed_with_warnings",
-        errorMessage: [conversionWarning, ...sizeWarnings].filter(Boolean).join("; "),
+        errorMessage: [conversionWarning, ...sizeWarnings]
+          .filter(Boolean)
+          .join("; "),
       });
       await sendDonationPromptSafely(ctx);
       return;
@@ -1005,9 +1215,14 @@ export async function svgFileToTgsSticker(ctx: Context, fileId: string) {
     await ctx.reply(caption);
     let telegramAccepted = false;
     try {
-      const sentSticker = await ctx.replyWithSticker(new InputFile(tgs, "sticker.tgs"));
+      const sentSticker = await ctx.replyWithSticker(
+        new InputFile(tgs, "sticker.tgs"),
+      );
       if (sentSticker.sticker?.file_id) {
-        resultStore.set(userId, { fileId: sentSticker.sticker.file_id, emoji: "✨" });
+        resultStore.set(userId, {
+          fileId: sentSticker.sticker.file_id,
+          emoji: "✨",
+        });
       }
       recordSentResult({
         telegramUserId: userId,
@@ -1031,12 +1246,23 @@ export async function svgFileToTgsSticker(ctx: Context, fileId: string) {
       });
       telegramAccepted = true;
     } catch (sendError) {
-      const message = sendError instanceof Error ? sendError.message : "Telegram rejected the sticker upload";
+      const message =
+        sendError instanceof Error
+          ? sendError.message
+          : "Telegram rejected the sticker upload";
       await ctx.reply(
         tr(
           ctx,
-          ["Telegram rejected this TGS as a sticker.", "I sent it as a file instead.", `Reason: ${message}`].join("\n"),
-          ["Telegram отклонил TGS как стикер.", "Я отправил его как обычный файл.", `Причина: ${message}`].join("\n"),
+          [
+            "Telegram rejected this TGS as a sticker.",
+            "I sent it as a file instead.",
+            `Reason: ${message}`,
+          ].join("\n"),
+          [
+            "Telegram отклонил TGS как стикер.",
+            "Я отправил его как обычный файл.",
+            `Причина: ${message}`,
+          ].join("\n"),
         ),
       );
       const sentDocument = await replyWithTgsDocument(ctx, tgs, caption);
@@ -1069,12 +1295,14 @@ export async function svgFileToTgsSticker(ctx: Context, fileId: string) {
       targetType: "tgs",
       success: false,
       outcome: "failed",
-      errorMessage: error instanceof Error ? error.message : "Unknown processing error",
+      errorMessage:
+        error instanceof Error ? error.message : "Unknown processing error",
     });
     logProductEvent(userId, "conversion_failed", {
       source_type: "svg",
       target_type: "tgs",
-      error: error instanceof Error ? error.message : "Unknown processing error",
+      error:
+        error instanceof Error ? error.message : "Unknown processing error",
     });
     throw error;
   }

@@ -1,22 +1,22 @@
-# Graph Report - Sticker2LottieBot  (2026-09-27)
+# Graph Report - Sticker2LottieBot  (2026-10-18)
 
 ## Corpus Check
-- 61 files · ~27,764 words
+- 69 files · ~30,463 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 437 nodes · 1130 edges · 18 communities (16 shown, 2 thin omitted)
+- 473 nodes · 1182 edges · 23 communities (22 shown, 1 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 47 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `38adea4d`
+- Built from commit: `ec04d635`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - database.ts
-- studioCBQ.ts
+- Q: Analyze unusually high failed conversion count in bot statistics
 - stickerToFile.ts
 - index.ts
 - starsPaymentHandler.ts
@@ -24,8 +24,8 @@
 - users.ts
 - Q: Какие новые продуктовые функции лучше всего повысят конверсию, вовлечённость и удержание Sticker2LottieBot?
 - svgFileToTgsSticker.ts
-- broadcast.ts
-- stats.ts
+- lottieAutoFix.ts
+- Q: Какие фичи добавить в Sticker2LottieBot и как лучше продвигать бот с учетом текущей статистики?
 - logProductEvent
 - package.json
 - /graphify
@@ -33,14 +33,17 @@
 - compilerOptions
 - convertSvgFile.ts
 - AGENTS.md
+- Q: Как Моя студия хранит стикеры: файлами на сервере или ссылками Telegram?
+- stickerPackCBQ.ts
+- doctor.ts
 
 ## God Nodes (most connected - your core abstractions)
 1. `tr()` - 79 edges
 2. `logProductEvent()` - 61 edges
 3. `startServer()` - 55 edges
 4. `svgToLottie()` - 22 edges
-5. `downloadStickerSet()` - 16 edges
-6. `lottieFileToTgsSticker()` - 16 edges
+5. `lottieFileToTgsSticker()` - 17 edges
+6. `downloadStickerSet()` - 16 edges
 7. `svgFileToTgsSticker()` - 16 edges
 8. `stickerToFile()` - 14 edges
 9. `/graphify` - 14 edges
@@ -49,35 +52,35 @@
 ## Surprising Connections (you probably didn't know these)
 - `startServer()` --indirect_call--> `autoFixCBQ()`  [INFERRED]
   src/index.ts → src/cbq/autoFixCBQ.ts
+- `startServer()` --indirect_call--> `doctorStartCBQ()`  [INFERRED]
+  src/index.ts → src/cbq/doctorCBQ.ts
 - `startServer()` --indirect_call--> `formatCBQ()`  [INFERRED]
   src/index.ts → src/cbq/formatCBQ.ts
-- `startServer()` --indirect_call--> `onboardingCBQ()`  [INFERRED]
-  src/index.ts → src/cbq/onboardingCBQ.ts
 - `startServer()` --indirect_call--> `starsSupportCBQ()`  [INFERRED]
   src/index.ts → src/cbq/starsSupportCBQ.ts
-- `startServer()` --indirect_call--> `studioViewCBQ()`  [INFERRED]
-  src/index.ts → src/cbq/studioCBQ.ts
+- `startServer()` --indirect_call--> `stickerPackAddCBQ()`  [INFERRED]
+  src/index.ts → src/cbq/stickerPackCBQ.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (18 total, 2 thin omitted)
+## Communities (23 total, 1 thin omitted)
 
 ### Community 0 - "database.ts"
 Cohesion: 0.05
 Nodes (41): addBuilderItemStmt, allUserIdsStmt, builderItemsStmt, builderItemStmt, clearBuilderStmt, ConversionLogInput, ConversionResultInput, conversionResultsCountStmt (+33 more)
 
-### Community 1 - "studioCBQ.ts"
-Cohesion: 0.24
-Nodes (13): itemKeyboard(), itemText(), studioFavoriteCBQ(), studioViewCBQ(), startCommand(), buildStudioPage(), resultLabel(), STUDIO_PAGE_SIZE (+5 more)
+### Community 1 - "Q: Analyze unusually high failed conversion count in bot statistics"
+Cohesion: 0.40
+Nodes (4): Answer, Outcome, Q: Analyze unusually high failed conversion count in bot statistics, Source Nodes
 
 ### Community 2 - "stickerToFile.ts"
-Cohesion: 0.10
-Nodes (13): formatCBQ(), setUserDefaultOutputFormat(), buildCaption(), stickerToFile(), ConvertFlowStore, ConvertMode, ConvertState, Tgs2LottieFormat (+5 more)
+Cohesion: 0.18
+Nodes (8): formatCBQ(), setUserDefaultOutputFormat(), buildCaption(), stickerToFile(), ConvertFlowStore, ConvertMode, ConvertState, Tgs2LottieFormat
 
 ### Community 3 - "index.ts"
 Cohesion: 0.09
-Nodes (53): doctorCancelCBQ(), doctorStartCBQ(), downloadPackChooseCBQ(), downloadPackFormatCBQ(), modeCBQ(), settingsFormatCBQ(), settingsLanguageCBQ(), settingsNotificationsCBQ() (+45 more)
+Nodes (58): doctorCancelCBQ(), downloadPackChooseCBQ(), downloadPackFormatCBQ(), modeCBQ(), onboardingCBQ(), settingsFormatCBQ(), settingsLanguageCBQ(), settingsNotificationsCBQ() (+50 more)
 
 ### Community 4 - "starsPaymentHandler.ts"
 Cohesion: 0.15
@@ -88,8 +91,8 @@ Cohesion: 0.24
 Nodes (7): clearStickerPackBuilder(), updateStickerPackBuilderEmoji(), buildStickerSetName(), firstEmoji(), handleStickerPackBuilderText(), StickerPackBuilderPendingInput, StickerPackBuilderStore
 
 ### Community 6 - "users.ts"
-Cohesion: 0.38
-Nodes (8): isAdmin(), usersCBQ(), buildUsersKeyboard(), buildUsersPageText(), formatUserLabel(), usersCommand(), getUsersPage(), StoredUser
+Cohesion: 0.23
+Nodes (13): isAdmin(), usersCBQ(), broadcastCommand(), sleep(), statsCommand(), buildUsersKeyboard(), buildUsersPageText(), formatUserLabel() (+5 more)
 
 ### Community 7 - "Q: Какие новые продуктовые функции лучше всего повысят конверсию, вовлечённость и удержание Sticker2LottieBot?"
 Cohesion: 0.50
@@ -97,19 +100,23 @@ Nodes (3): Answer, Q: Какие новые продуктовые функци�
 
 ### Community 8 - "svgFileToTgsSticker.ts"
 Cohesion: 0.10
-Nodes (45): addCubic(), addLine(), applyMatrix(), arcToCubics(), attrsWithClasses(), buildBinaryCaption(), buildCaption(), collectShapeDefinitions() (+37 more)
+Nodes (44): addCubic(), addLine(), applyMatrix(), arcToCubics(), attrsWithClasses(), buildBinaryCaption(), buildCaption(), collectShapeDefinitions() (+36 more)
 
-### Community 9 - "broadcast.ts"
-Cohesion: 0.83
-Nodes (3): broadcastCommand(), sleep(), getAllTelegramUserIds()
+### Community 10 - "lottieAutoFix.ts"
+Cohesion: 0.24
+Nodes (16): autoFixLottieJson(), componentAt(), handleHasDifferentAxisCurves(), isSplitDimensionProperty(), normalizeTelegramPositionEasing(), scalarEasingHandle(), scalarPositionKeyframe(), scaleAnimationTimeline() (+8 more)
+
+### Community 11 - "Q: Какие фичи добавить в Sticker2LottieBot и как лучше продвигать бот с учетом текущей статистики?"
+Cohesion: 0.40
+Nodes (4): Answer, Outcome, Q: Какие фичи добавить в Sticker2LottieBot и как лучше продвигать бот с учетом текущей статистики?, Source Nodes
 
 ### Community 12 - "logProductEvent"
-Cohesion: 0.09
-Nodes (44): autoFixCBQ(), demoLottie, onboardingCBQ(), logConversion(), logProductEvent(), recordConversionResult(), stickerHandler(), recordSentResult() (+36 more)
+Cohesion: 0.08
+Nodes (47): autoFixCBQ(), demoLottie, logConversion(), logProductEvent(), recordConversionResult(), documentHandler(), stickerHandler(), textHandler() (+39 more)
 
 ### Community 13 - "package.json"
 Cohesion: 0.06
-Nodes (34): abort-controller, axios, dotenv, file-type, grammy, jszip, author, dependencies (+26 more)
+Nodes (35): abort-controller, axios, dotenv, file-type, grammy, jszip, author, dependencies (+27 more)
 
 ### Community 14 - "/graphify"
 Cohesion: 0.06
@@ -127,25 +134,37 @@ Nodes (13): src/**/*, compilerOptions, allowSyntheticDefaultImports, esModuleInt
 Cohesion: 0.70
 Nodes (4): execFileAsync, fileExists(), findOnPath(), resolveLottieConvertBin()
 
+### Community 19 - "Q: Как Моя студия хранит стикеры: файлами на сервере или ссылками Telegram?"
+Cohesion: 0.50
+Nodes (3): Answer, Q: Как Моя студия хранит стикеры: файлами на сервере или ссылками Telegram?, Source Nodes
+
+### Community 20 - "stickerPackCBQ.ts"
+Cohesion: 0.48
+Nodes (5): buildStickerSetName(), stickerPackAddCBQ(), getInlineConversionResults(), setManagedStickerSetName(), inlineQueryHandler()
+
+### Community 22 - "doctor.ts"
+Cohesion: 0.29
+Nodes (4): doctorStartCBQ(), doctorCommand(), startDoctor(), DoctorStore
+
 ## Knowledge Gaps
-- **147 isolated node(s):** `name`, `version`, `type`, `description`, `author` (+142 more)
+- **157 isolated node(s):** `name`, `version`, `type`, `description`, `author` (+152 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **2 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **1 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `tr()` connect `index.ts` to `studioCBQ.ts`, `stickerToFile.ts`, `starsPaymentHandler.ts`, `publishStickerPack.ts`, `svgFileToTgsSticker.ts`, `logProductEvent`?**
-  _High betweenness centrality (0.073) - this node is a cross-community bridge._
-- **Why does `logProductEvent()` connect `logProductEvent` to `database.ts`, `studioCBQ.ts`, `stickerToFile.ts`, `index.ts`, `starsPaymentHandler.ts`, `publishStickerPack.ts`, `svgFileToTgsSticker.ts`?**
-  _High betweenness centrality (0.050) - this node is a cross-community bridge._
-- **Why does `ConvertFlowStore` connect `stickerToFile.ts` to `index.ts`?**
-  _High betweenness centrality (0.020) - this node is a cross-community bridge._
+- **Why does `tr()` connect `index.ts` to `stickerToFile.ts`, `starsPaymentHandler.ts`, `publishStickerPack.ts`, `svgFileToTgsSticker.ts`, `logProductEvent`, `stickerPackCBQ.ts`, `doctor.ts`?**
+  _High betweenness centrality (0.069) - this node is a cross-community bridge._
+- **Why does `logProductEvent()` connect `logProductEvent` to `database.ts`, `stickerToFile.ts`, `index.ts`, `starsPaymentHandler.ts`, `publishStickerPack.ts`, `svgFileToTgsSticker.ts`, `stickerPackCBQ.ts`, `doctor.ts`?**
+  _High betweenness centrality (0.047) - this node is a cross-community bridge._
+- **Why does `ConvertFlowStore` connect `stickerToFile.ts` to `index.ts`, `logProductEvent`?**
+  _High betweenness centrality (0.018) - this node is a cross-community bridge._
 - **Are the 47 inferred relationships involving `startServer()` (e.g. with `autoFixCBQ()` and `doctorCancelCBQ()`) actually correct?**
   _`startServer()` has 47 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `name`, `version`, `type` to the rest of the system?**
-  _147 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _157 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `database.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.046511627906976744 - nodes in this community are weakly interconnected._
-- **Should `stickerToFile.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.0989247311827957 - nodes in this community are weakly interconnected._
+- **Should `index.ts` be split into smaller, more focused modules?**
+  _Cohesion score 0.08763693270735524 - nodes in this community are weakly interconnected._
